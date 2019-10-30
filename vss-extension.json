@@ -1,0 +1,45 @@
+{
+  "manifestVersion": 1,
+  "id": "dependency-track-build-tasks",
+  "version": "0.1.0",
+  "name": "Dependency Track Build Tasks",
+  "description": "Tasks that help with the integration between Azure DevOps and Dependency Track.",
+  "publisher": "eshaar-me",
+  "icons": {
+    "default": "images/icon128.png"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "tags": [
+    "Dependency Track",
+    "Security",
+    "OWASP"
+  ],
+  "scopes": [
+    "vso.build_execute"
+  ],
+  "files": [
+    {
+      "path": "UploadBOM"
+    },
+    {
+      "path": "images",
+      "addressable": true
+    }
+  ],
+  "contributions": [
+    {
+      "id": "upload-bom-dtrack-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "Upload BOM to Dependency Track"
+      }
+    }
+  ]
+}

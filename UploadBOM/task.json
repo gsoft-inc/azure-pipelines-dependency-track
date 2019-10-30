@@ -1,0 +1,21 @@
+{
+  "id": "8703D74D-71E5-4666-AE55-B26DF77F2AD5",
+  "name": "upload-bom-dtrack-task",
+  "friendlyName": "Upload BOM to Dependency Track",
+  "description": "Upload a BOM file to Dependency Track platform.",
+  "author": "Edouard Shaar",
+  "category": "Build",
+  "visibility": ["Build"],
+  "version": {
+    "Major": 0,
+    "Minor": 1,
+    "Patch": 0
+  },
+  "minimumAgentVersion": "2.0.0",
+  "inputs": [],
+  "execution": {
+      "PowerShell3": {
+          "target": "task.ps1"
+      }
+  }
+}
