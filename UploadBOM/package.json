@@ -1,0 +1,18 @@
+{
+  "name": "uploadbom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "task.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "azure-pipelines-task-lib": "^2.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.5",
+    "@types/q": "^1.5.2"
+  }
+}

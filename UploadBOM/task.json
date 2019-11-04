@@ -3,19 +3,56 @@
   "name": "upload-bom-dtrack-task",
   "friendlyName": "Upload BOM to Dependency Track",
   "description": "Upload a BOM file to Dependency Track platform.",
+  "instanceNameFormat": "Upload BOM to $(dtrackURI)",
   "author": "Edouard Shaar",
   "category": "Build",
-  "visibility": ["Build"],
+  "visibility": [
+    "Build"
+  ],
   "version": {
     "Major": 0,
     "Minor": 1,
-    "Patch": 0
+    "Patch": 5
   },
   "minimumAgentVersion": "2.0.0",
-  "inputs": [],
+  "inputs": [
+    {
+      "name": "bomFilePath",
+      "label": "BOM File Path",
+      "type": "filePath",
+      "required": true,
+      "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
+    },
+    {
+      "name": "dtrackProjId",
+      "label": "Project Id",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The guid of the project in Dependency Track"
+    },
+    {
+      "name": "dtrackAPIKey",
+      "label": "API Key",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The Dependency Track API key"
+    },
+    {
+      "name": "dtrackURI",
+      "label": "Dependency Track URI",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The URL to the Dependency Track platform"
+    }
+  ],
+  "messages": {
+    "FileNotFound": "BOM file path is not a file: %s",
+    "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
+    "BOMUploadSuccess": "Uploading the BOM succeeded! Token: %s"
+  },
   "execution": {
-      "PowerShell3": {
-          "target": "task.ps1"
-      }
+    "Node10": {
+      "target": "task.js"
+    }
   }
 }
