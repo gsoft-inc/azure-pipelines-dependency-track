@@ -4,7 +4,7 @@
   "version": "0.1.5",
   "name": "Dependency Track Build Tasks",
   "description": "Tasks that help with the integration between Azure DevOps and Dependency Track.",
-  "publisher": "eshaar-me",
+  "publisher": "officevibe",
   "icons": {
     "default": "images/icon128.png"
   },
@@ -44,5 +44,17 @@
         "name": "UploadBOM"
       }
     }
-  ]
+  ],
+  "content": {
+    "details": {
+      "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/Officevibe/azuredevops-dependency-track-build-task"
+  }
 }
