@@ -10,8 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3",
-    "request": "^2.88.0",
-    "uglify-js": "^1.3.5"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.5",
