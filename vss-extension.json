@@ -55,6 +55,6 @@
   },
   "repository": {
     "type": "git",
-    "uri": "https://github.com/Officevibe/azuredevops-dependency-track-build-task"
+    "uri": "https://github.com/gsoft-inc/azure-pipelines-dependency-track"
   }
 }
