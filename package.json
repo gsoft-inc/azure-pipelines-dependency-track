@@ -2,7 +2,9 @@
   "name": "azure-pipelines-dependency-track",
   "scripts": {
     "package": "tfx extension create --output-path PackageOutput",
-    "bump-version": "node version-bump.js"
+    "bump-version": "node version-bump.js",
+    "publish": "tfx extension publish --publisher gsoft",
+    "publish:dev": "tfx extension publish --publisher gsoft-dev"
   },
   "devDependencies": {
     "tfx-cli": "^0.7.11"
