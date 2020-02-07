@@ -94,7 +94,7 @@ const run = async (args) => {
       
       settings.version.major = Math.max(prodVersion.major, devVersion.major)
       settings.version.minor = Math.max(prodVersion.minor, devVersion.minor)
-      settings.version.patch = (prodVersion.major != devVersion.major || prodVersion.minor != devVersion.minor) ? 1 : devVersion.patch++
+      settings.version.patch = (prodVersion.major != devVersion.major || prodVersion.minor != devVersion.minor) ? 1 : devVersion.patch + 1
       break;
     case 'hotfix':
       settings.version = prodVersion
