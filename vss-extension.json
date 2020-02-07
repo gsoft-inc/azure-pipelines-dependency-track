@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "dependency-track-build-tasks",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "name": "Dependency Track Build Tasks",
   "description": "Tasks that help with the integration between Azure DevOps and Dependency Track.",
   "publisher": "officevibe",

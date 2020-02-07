@@ -14,6 +14,12 @@ jobs:
       with:
         node-version: 12.x
       
-    - run: |
-        cd UploadBOM
-        npm install
+    - name: Install Task Dependencies 
+      run: npm install
+
+    - name: Install UploadBOM Dependencies 
+      run: npm install
+      working-directory: UploadBOM
+    
+    - name: Package task
+      run: npm run package
