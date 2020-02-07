@@ -20,7 +20,11 @@ async function getPublishedVersion(token, publisher, extensionId) {
 
         try {
           let [major, minor, patch] = extensionData.versions[0].version.split('.')
-          resolve({major, minor, patch})
+          resolve({
+            major: parseInt(major), 
+            minor: parseInt(minor), 
+            patch: parseInt(patch)
+          })
         }
         catch (err) {
           reject(err)
@@ -90,7 +94,7 @@ const run = async (args) => {
       
       settings.version.major = Math.max(prodVersion.major, devVersion.major)
       settings.version.minor = Math.max(prodVersion.minor, devVersion.minor)
-      settings.version.patch = (prodVersion.major != devVersion.major || prodVersion.minor != devVersion.minor) ? 1 : devVersion.patch + 1
+      settings.version.patch = (prodVersion.major != devVersion.major || prodVersion.minor != devVersion.minor) ? 1 : devVersion.patch++
       break;
     case 'hotfix':
       settings.version = prodVersion
