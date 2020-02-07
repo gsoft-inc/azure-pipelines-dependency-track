@@ -20,6 +20,9 @@ jobs:
     - name: Install UploadBOM Dependencies 
       run: npm install
       working-directory: UploadBOM
+
+    - name: Update version information
+      run: npm run bump-version -- -t TokenValueHere
     
     - name: Package task
       run: npm run package
