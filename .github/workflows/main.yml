@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  build_upload_bom:
+  build_package:
     name: "Build and Package Extention"
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
       working-directory: UploadBOM
 
     - name: Update version information
-      run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }}
+      run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }} --release-type dev
     
     - name: Package task
       run: npm run package
@@ -32,3 +32,27 @@ jobs:
       with:
         name: Extension Package
         path: PackageOutput
+  
+  publish_marketplace:
+    name: "Publish to VS Marketplace"
+    needs: build_package
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+        
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+        
+      - name: Install Task Dependencies 
+        run: npm install
+
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+          name: Extension Package
+          path: package
+      
+      - name: Publish to marketplace
+        run: |
+          find ./package -name '*.vsix' -exec tfx extension publish -t ${{ secrets.marketplace_access_token }} --publisher gsoft-dev --vsix {}
