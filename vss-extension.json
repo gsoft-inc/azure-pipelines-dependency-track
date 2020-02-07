@@ -1,10 +1,10 @@
 {
   "manifestVersion": 1,
-  "id": "dependency-track-build-tasks",
+  "id": "dependency-track-vsts",
   "version": "0.0.0",
-  "name": "Dependency Track Build Tasks",
+  "name": "Dependency Track",
   "description": "Tasks that help with the integration between Azure DevOps and Dependency Track.",
-  "publisher": "officevibe",
+  "publisher": "GSoft",
   "icons": {
     "default": "images/icon128.png"
   },
@@ -17,6 +17,10 @@
     "Dependency Track",
     "Security",
     "OWASP"
+  ],
+  "galleryFlags": [
+    "Free",
+    "Public"
   ],
   "categories": [
     "Azure Pipelines"

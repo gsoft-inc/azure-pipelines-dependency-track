@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build_upload_bom:
-    name: "Build UploadBom"
+    name: "Build and Package Extention"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
       working-directory: UploadBOM
 
     - name: Update version information
-      run: npm run bump-version -- -t ${{ secrets.marketplace_access_token }}
+      run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }}
     
     - name: Package task
       run: npm run package
