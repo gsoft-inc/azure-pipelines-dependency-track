@@ -1,0 +1,61 @@
+name: CI/CD - Production
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build_package:
+    name: "Build and Package Extention"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+      
+    - name: Install Task Dependencies 
+      run: npm install
+
+    - name: Install UploadBOM Dependencies 
+      run: npm install
+      working-directory: UploadBOM
+
+    - name: Update Extension information
+      run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }} --release-type prod
+    
+    - name: Package task
+      run: npm run package
+    
+    - name: Upload vsix Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: Extension-Package
+        path: PackageOutput
+  
+  publish_marketplace:
+    name: "Publish to VS Marketplace"
+    needs: build_package
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+        
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+        
+      - name: Install Dependencies 
+        run: npm install
+
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: Extension-Package
+          path: package
+      
+      - name: Publish to marketplace
+        run: |
+          find ./package -name '*.vsix' -exec npm run publish -- -t ${{ secrets.marketplace_access_token }} --vsix {} \;
