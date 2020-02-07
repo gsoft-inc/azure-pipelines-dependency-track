@@ -30,7 +30,7 @@ jobs:
     - name: Upload vsix Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: Extension Package
+        name: Extension-Package
         path: PackageOutput
   
   publish_marketplace:
@@ -50,7 +50,8 @@ jobs:
 
       - name: Download artifact
         uses: actions/download-artifact@v1
-          name: Extension Package
+        with:
+          name: Extension-Package
           path: package
       
       - name: Publish to marketplace
