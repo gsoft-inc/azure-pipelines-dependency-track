@@ -23,3 +23,9 @@ jobs:
     
     - name: Package task
       run: npm run package
+    
+    - name: Upload vsix Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Extension Package
+          path: PackageOutput
