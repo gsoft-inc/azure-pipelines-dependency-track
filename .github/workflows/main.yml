@@ -21,7 +21,7 @@ jobs:
       run: npm install
       working-directory: UploadBOM
 
-    - name: Update version information
+    - name: Update Extension information
       run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }} --release-type dev
     
     - name: Package task
@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: 12.x
         
-      - name: Install Task Dependencies 
+      - name: Install Dependencies 
         run: npm install
 
       - name: Download artifact
@@ -56,5 +56,5 @@ jobs:
       
       - name: Publish to marketplace
         run: |
-          ls
+          ls ./package
           find ./package -name '*.vsix' -exec tfx extension publish -t ${{ secrets.marketplace_access_token }} --publisher gsoft-dev --vsix {}
