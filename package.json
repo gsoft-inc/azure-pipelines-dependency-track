@@ -1,7 +1,7 @@
 {
   "name": "azure-pipelines-dependency-track",
   "scripts": {
-    "package": "tfx extension create --rev-version --output-path Output"
+    "package": "tfx extension create --rev-version --output-path PackageOutput"
   },
   "devDependencies": {
     "tfx-cli": "^0.7.11"
