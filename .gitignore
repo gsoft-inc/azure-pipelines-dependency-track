@@ -2,3 +2,4 @@
 
 *.vsix
 .taskkey
+bom.xml

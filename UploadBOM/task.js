@@ -20,12 +20,12 @@ async function sendBOM(bom, projId, apiKey, url) {
         "bom": bom
       }
     },
-    (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        resolve({response, body});
-      } else {
-        reject({error, response, body});
+    (error, response) => {
+      if (!error && response.statusCode == 200) {
+        resolve(response);
       }
+
+      reject({error, response});
     });
   });
 }
@@ -48,15 +48,18 @@ const run = async () => {
 
     try {
       const res = await sendBOM(bom, dtrackProjId, dtrackAPIKey, dtrackURI);
-      console.log('StatusCode: ' + res.response.statusCode)
-      console.log('StatusMessage: ' + res.response.statusMessage)
-      console.log('Content' + res.body)
-    } 
-    catch (error) {
-      console.log(error.body)
-      throw new Error(tl.loc('BOMUploadFailed', error.body[0].message));
-    }
 
+      console.log('StatusCode:', res.statusCode)
+      console.log('StatusMessage:', res.statusMessage)
+      console.log('Content:', JSON.stringify(res.body))
+    } 
+    catch (err) {
+      if (err.error) {
+        throw new Error(tl.loc('BOMUploadFailed', `${JSON.stringify(err.error)}`));
+      }
+
+      throw new Error(tl.loc('BOMUploadFailed', `${err.response.statusCode} - ${err.response.statusMessage}`));
+    }
   }
   catch (err) {
     tl.setResult(tl.TaskResult.Failed, err.message);
