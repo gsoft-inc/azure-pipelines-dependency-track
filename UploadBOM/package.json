@@ -10,10 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3",
-    "request": "^2.88.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "@types/node": "^12.12.5",
+    "@types/node": "^12.12.35",
     "@types/q": "^1.5.2"
   }
 }
