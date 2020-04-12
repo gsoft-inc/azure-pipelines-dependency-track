@@ -31,15 +31,15 @@
   "files": [
     {
       "path": "UploadBOM/node_modules",
-      "packagePath": "Tasks/UploadBOM/node_modules"
+      "packagePath": "UploadBOM/node_modules"
     },
     {
       "path": "UploadBOM/dist",
-      "packagePath": "Tasks/UploadBOM"
+      "packagePath": "UploadBOM"
     },
     {
       "path": "UploadBOM/icon.png",
-      "packagePath": "Tasks/UploadBOM/icon.png",
+      "packagePath": "UploadBOM/icon.png",
       "addressable": true
     },
     {
