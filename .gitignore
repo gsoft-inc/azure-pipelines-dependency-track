@@ -1,5 +1,7 @@
 **/node_modules
+**/dist
 
 *.vsix
 .taskkey
 bom.xml
+run.cmd
