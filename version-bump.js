@@ -133,7 +133,7 @@ const run = async args => {
     content.public = settings.public;
   })
 
-  const taskJsonPath = path.resolve(__dirname, 'UploadBOM/task.json');
+  const taskJsonPath = path.resolve(__dirname, 'UploadBOM/dist/task.json');
   await updateJsonContent(taskJsonPath, content => {
     content.version = {
       Major: settings.version.major,

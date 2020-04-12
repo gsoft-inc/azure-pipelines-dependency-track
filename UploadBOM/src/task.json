@@ -47,8 +47,13 @@
   ],
   "messages": {
     "FileNotFound": "BOM file path is not a file: %s",
+    "UnableToReadBom": "Unable to read bom fille: %s",
+    "ReadingBom": "Reading BOM from location: %s",
+    "BOMUploadStarting": "Starting BOM upload to Dependency Track at url: %s",
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
-    "BOMUploadSuccess": "Uploading the BOM succeeded! Token: %s"
+    "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",
+    "TaskSucceed": "Finished task execution successfully!",
+    "TaskFailed": "Finished task execution with error - %s"
   },
   "execution": {
     "Node10": {

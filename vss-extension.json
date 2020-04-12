@@ -30,7 +30,17 @@
   ],
   "files": [
     {
-      "path": "UploadBOM"
+      "path": "UploadBOM/node_modules",
+      "packagePath": "UploadBOM/node_modules"
+    },
+    {
+      "path": "UploadBOM/dist",
+      "packagePath": "UploadBOM"
+    },
+    {
+      "path": "UploadBOM/icon.png",
+      "packagePath": "UploadBOM/icon.png",
+      "addressable": true
     },
     {
       "path": "images",

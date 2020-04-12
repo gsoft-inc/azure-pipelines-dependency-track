@@ -19,8 +19,11 @@ jobs:
     - name: Install Task Dependencies 
       run: npm install
 
-    - name: Install UploadBOM Dependencies 
-      run: npm install
+    - name: Build UploadBOM Task
+      run: |
+        npm install
+        npm run build
+        npm prune --production
       working-directory: UploadBOM
 
     - name: Update Extension information
