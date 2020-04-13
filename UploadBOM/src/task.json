@@ -15,12 +15,25 @@
     "Patch": 0
   },
   "minimumAgentVersion": "2.0.0",
+  "groups": [
+    {
+      "name": "baseSettings",
+      "displayName": "Base Settings",
+      "isExpanded": true
+    },
+    {
+      "name": "thresholds",
+      "displayName": "Threshold Options",
+      "isExpanded": false
+    }
+  ],
   "inputs": [
     {
       "name": "bomFilePath",
       "label": "BOM File Path",
       "type": "filePath",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
     },
     {
@@ -28,6 +41,7 @@
       "label": "Project Id",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The guid of the project in Dependency Track"
     },
     {
@@ -35,6 +49,7 @@
       "label": "API Key",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The Dependency Track API key"
     },
     {
@@ -42,7 +57,53 @@
       "label": "Dependency Track URI",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The URL to the Dependency Track platform"
+    },
+    {
+      "name": "thresholdCritical",
+      "label": "Critical Vulnerability Threshold",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of critical vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdHigh",
+      "label": "High Vulnerability Threshold",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of high vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdMedium",
+      "label": "Medium Vulnerability Threshold",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of medium vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdLow",
+      "label": "Low Vulnerability Threshold",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of low vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdUnassigned",
+      "label": "Unassigned Vulnerability Threshold",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of unassigned vulnerabilities to tolerate.\nA value of -1 disables this threshold."
     }
   ],
   "messages": {

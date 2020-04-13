@@ -27,5 +27,39 @@ class DTrackClient {
         });
     });
   }
+
+  pullProcessingStatusAsync(token) {
+    return new Promise((resolve, reject) => {
+      request(`/api/v1/bom/token/${token}`, {
+        baseUrl: this.baseUrl,
+        method: 'GET',
+        headers: { 'X-API-Key': this.apiKey }
+      },
+        (error, response) => {
+          if (!error && response.statusCode == 200) {
+            resolve(response);
+          }
+
+          reject({ error, response });
+        });
+    });
+  }
+
+  getProjectMetricsAsync(projId) {
+    return new Promise((resolve, reject) => {
+      request(`/api/v1/metrics/project/${projId}/current`, {
+        baseUrl: this.baseUrl,
+        method: 'GET',
+        headers: { 'X-API-Key': this.apiKey }
+      },
+      (error, response) => {
+        if (!error && response.statusCode == 200) {
+          resolve(response);
+        }
+        
+        reject({ error, response });
+      });
+    });
+  }
 }
 export default DTrackClient;

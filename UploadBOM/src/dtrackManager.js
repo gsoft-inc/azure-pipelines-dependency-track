@@ -21,5 +21,24 @@ class DTrackManager {
       throw new Error(localize('BOMUploadFailed', `${err}`));
     }
   }
+
+  async waitBomProcessing(token) {
+    let processing = true;
+    while (processing) {
+      await this.sleepAsync(2000);
+      let res = await this.dtrackClient.pullProcessingStatusAsync(token);
+      processing = res.body.processing;
+    }
+  }
+
+  async getProjectMetricsAsync(){
+    const metrics = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+    console.log(`metrics: ${JSON.stringify(metrics.body)}`);
+    return metrics.body;
+  }
+
+  sleepAsync(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }
 export default DTrackManager;

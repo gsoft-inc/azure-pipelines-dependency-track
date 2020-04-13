@@ -36,6 +36,12 @@ const run = async () => {
   console.log(localize('BOMUploadStarting', dtrackURI));
   const token = await dtrackManager.uploadBomAsync(bom);
   console.log(localize('BOMUploadSucceed', token));
+
+  console.log(`Processing BOM...`);
+  await dtrackManager.waitBomProcessing(token);
+  console.log(`Done!`);
+
+  await dtrackManager.getProjectMetricsAsync();
 };
 
 run().then(
