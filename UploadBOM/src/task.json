@@ -131,7 +131,7 @@
     "TaskFailed": "Finished task execution with error - %s",
     "ThresholdInNotAnInteger": "%s threshold needs to be an integer value.",
     "ThresholdSurpassed": "%s threshold surpassed.",
-    "RetrievingMetrics": "Retrieving metrics from Dependency Track.",
+    "RetrievingMetrics": "Waitting for metrics to refresh.",
     "ProcessingBOM": "Waitting for Dependency Track to finish processing the BOM."
   },
   "execution": {
