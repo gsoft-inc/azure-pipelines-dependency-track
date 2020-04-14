@@ -61,8 +61,22 @@
       "helpMarkDown": "The URL to the Dependency Track platform"
     },
     {
+      "name": "thresholdAction",
+      "label": "Action on Threshold",
+      "type": "radio",
+      "defaultValue": "none",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "The result of the task if the threshold is attained.",
+      "options": {
+        "none": "No Action",
+        "warn": "Warning",
+        "error": "Error"
+      }
+    },
+    {
       "name": "thresholdCritical",
-      "label": "Critical Vulnerability Threshold",
+      "label": "Critical Vulnerability Count",
       "type": "string",
       "defaultValue": "-1",
       "required": false,
@@ -71,7 +85,7 @@
     },
     {
       "name": "thresholdHigh",
-      "label": "High Vulnerability Threshold",
+      "label": "High Vulnerability Count",
       "type": "string",
       "defaultValue": "-1",
       "required": false,
@@ -80,7 +94,7 @@
     },
     {
       "name": "thresholdMedium",
-      "label": "Medium Vulnerability Threshold",
+      "label": "Medium Vulnerability Count",
       "type": "string",
       "defaultValue": "-1",
       "required": false,
@@ -89,7 +103,7 @@
     },
     {
       "name": "thresholdLow",
-      "label": "Low Vulnerability Threshold",
+      "label": "Low Vulnerability Count",
       "type": "string",
       "defaultValue": "-1",
       "required": false,
@@ -98,7 +112,7 @@
     },
     {
       "name": "thresholdUnassigned",
-      "label": "Unassigned Vulnerability Threshold",
+      "label": "Unassigned Vulnerability Count",
       "type": "string",
       "defaultValue": "-1",
       "required": false,
@@ -114,7 +128,11 @@
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
     "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",
     "TaskSucceed": "Finished task execution successfully!",
-    "TaskFailed": "Finished task execution with error - %s"
+    "TaskFailed": "Finished task execution with error - %s",
+    "ThresholdInNotAnInteger": "%s threshold needs to be an integer value.",
+    "ThresholdSurpassed": "%s threshold surpassed.",
+    "RetrievingMetrics": "Retrieving metrics from Dependency Track.",
+    "ProcessingBOM": "Waitting for Dependency Track to finish processing the BOM."
   },
   "execution": {
     "Node10": {

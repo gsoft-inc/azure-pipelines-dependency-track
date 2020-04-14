@@ -32,9 +32,10 @@ class DTrackManager {
   }
 
   async getProjectMetricsAsync(){
-    const metrics = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
-    console.log(`metrics: ${JSON.stringify(metrics.body)}`);
-    return metrics.body;
+    const res = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+    let metrics = JSON.parse(res.body);
+
+    return metrics;
   }
 
   sleepAsync(ms) {
