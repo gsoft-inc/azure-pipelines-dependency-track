@@ -6,12 +6,12 @@ import DTrackClient from './dtrackClient.js'
 import DTrackManager from './dtrackManager.js'
 import {localize} from './localization.js'
 
-function loadBom(path) {
+function loadFile(path, errorKey) {
   try {
     return fs.readFileSync(path);
   }
   catch (err) {
-    throw new Error(localize('UnableToReadBom', err));
+    throw new Error(localize(errorKey, err));
   }
 }
 
@@ -22,16 +22,26 @@ const run = async () => {
   const dtrackProjId = tl.getInput('dtrackProjId', true);
   const dtrackAPIKey = tl.getInput('dtrackAPIKey', true);
   const dtrackURI = tl.getInput('dtrackURI', true);
+  const caFilePath = tl.getPathInput('caFilePath', false, true);
 
   if (!tl.stats(bomFilePath).isFile()) {
     throw new Error(localize('FileNotFound', bomFilePath));
   }
 
-  const client = new DTrackClient(dtrackURI, dtrackAPIKey);
+  let caFile;
+  if (caFilePath && !tl.stats(caFilePath).isFile()) {
+    throw new Error(localize('FileNotFound', caFilePath));
+  } 
+  else if (caFilePath) {
+    console.log(localize('ReadingCA', caFilePath));
+    caFile = loadFile(caFilePath, 'UnableToReadCA');
+  }
+
+  const client = new DTrackClient(dtrackURI, dtrackAPIKey, caFile);
   const dtrackManager = new DTrackManager(client, dtrackProjId);
 
   console.log(localize('ReadingBom', bomFilePath));
-  const bom = loadBom(bomFilePath);
+  const bom = loadFile(bomFilePath, 'UnableToReadBom');
 
   console.log(localize('BOMUploadStarting', dtrackURI));
   const token = await dtrackManager.uploadBomAsync(bom);
