@@ -8,6 +8,7 @@ Azure DevOps extension for submitting BOM reports to Dependency-Track
 | Project Id | dtrackProjId |    The guid of the project in Dependency Track   | True |
 | API Key | dtrackAPIKey | The Dependency Track API key | True |
 | Dependency Track URI | dtrackURI | The URL to the Dependency Track platform | True |
+| Certificate Authority Public Certificate | caFilePath | File path to PEM encoded CA certificate. This setting is used when Dependency Track is using a self-signed certificate or an internal CA provider for it's TLS configuration. | False |
 
 ## Usage Example
     trigger:
