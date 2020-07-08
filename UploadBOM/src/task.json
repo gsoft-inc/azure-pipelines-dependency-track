@@ -15,12 +15,25 @@
     "Patch": 0
   },
   "minimumAgentVersion": "2.0.0",
+  "groups": [
+    {
+      "name": "baseSettings",
+      "displayName": "Base Settings",
+      "isExpanded": true
+    },
+    {
+      "name": "sslSettings",
+      "displayName": "SSL Options",
+      "isExpanded": false
+    }
+  ],
   "inputs": [
     {
       "name": "bomFilePath",
       "label": "BOM File Path",
       "type": "filePath",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
     },
     {
@@ -28,6 +41,7 @@
       "label": "Project Id",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The guid of the project in Dependency Track"
     },
     {
@@ -35,6 +49,7 @@
       "label": "API Key",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The Dependency Track API key"
     },
     {
@@ -42,13 +57,24 @@
       "label": "Dependency Track URI",
       "type": "string",
       "required": true,
+      "groupName": "baseSettings",
       "helpMarkDown": "The URL to the Dependency Track platform"
+    },
+    {
+      "name": "caFilePath",
+      "label": "Trusted CA certificate",
+      "type": "filePath",
+      "required": false,
+      "groupName": "sslSettings",
+      "helpMarkDown": "File path to PEM encoded CA certificate. This setting is used when Dependency Track is using a self-signed certificate or an internal CA provider for it's TLS configuration."
     }
   ],
   "messages": {
     "FileNotFound": "BOM file path is not a file: %s",
-    "UnableToReadBom": "Unable to read bom fille: %s",
+    "UnableToReadBom": "Unable to read bom file: %s",
     "ReadingBom": "Reading BOM from location: %s",
+    "UnableToReadCA": "Unable to read certificate file: %s",
+    "ReadingCA": "Reading certificate from location: %s",
     "BOMUploadStarting": "Starting BOM upload to Dependency Track at url: %s",
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
     "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",
