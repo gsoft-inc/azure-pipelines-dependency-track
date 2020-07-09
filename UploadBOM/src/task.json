@@ -145,13 +145,18 @@
     "TaskSucceed": "Finished task execution successfully!",
     "TaskFailed": "Finished task execution with error - %s",
     "ThresholdInNotAnInteger": "%s threshold needs to be an integer value.",
-    "ThresholdSurpassed": "%s threshold surpassed.",
+    "VulnCountThresholdSurpassed": "%s vulnerability count threshold surpassed.",
     "RetrievingMetrics": "Waitting for metrics to refresh.",
     "ProcessingBOM": "Waitting for Dependency Track to finish processing the BOM.",
     "Polling": "Polling Dependency Track for update.",
     "LastBOMImport": "Last date of BOM import: %s",
     "LastMetricUpdate": "Last date of Metrics update: %s",
-    "VulnCount": "Current Vulnerability Count:\nCritical: %s\nHigh:%s\nMedium: %s\nLow: %s\nUnassigned: %s\nSuppressed: %s"
+    "VulnCount": "Current Vulnerability Count:\nCritical: %s\nHigh:%s\nMedium: %s\nLow: %s\nUnassigned: %s\nSuppressed: %s",
+    "Critical": "Critical",
+    "High": "High",
+    "Medium": "Medium",
+    "Low": "Low",
+    "Unassigned": "Unassigned"
   },
   "execution": {
     "Node10": {
