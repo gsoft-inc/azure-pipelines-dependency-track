@@ -42,7 +42,7 @@ class DTrackClient {
       },
         (error, response) => {
           if (!error && response.statusCode == 200) {
-            resolve(response);
+            resolve(JSON.parse(response.body).processing);
           }
 
           reject({ error, response });

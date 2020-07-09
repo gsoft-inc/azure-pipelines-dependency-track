@@ -40,24 +40,22 @@ class DTrackManager {
     while (processing) {
       //await this.sleepAsync(2000);
       console.log('pull status')
-      let res = await this.dtrackClient.pullProcessingStatusAsync(token);
-      processing = res.body.processing;
+      processing = await this.dtrackClient.pullProcessingStatusAsync(token);
     }
   }
 
   async waitMetricsRefresh() {
     const lastBomImport = new Date((await this.getProjectInfo()).lastBomImport);
     let metrics = undefined;
-    let lastOccurrence = undefined;
       
     do {
       //await this.sleepAsync(2000);
       console.log('pull metrics')
       metrics = await this.getProjectMetricsAsync();
-      lastOccurrence = new Date(metrics.lastOccurrence);
-      console.log(`lastOccurrence: ${lastOccurrence}`);
+
+      console.log(`lastOccurrence: ${new Date(metrics.lastOccurrence)}`);
       console.log(`lastBomImport: ${lastBomImport}`);
-    } while (lastOccurrence < lastBomImport)
+    } while (new Date(metrics.lastOccurrence) < lastBomImport)
 
     return metrics;
   }
