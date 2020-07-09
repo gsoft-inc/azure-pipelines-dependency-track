@@ -4,7 +4,7 @@ Azure DevOps extension for submitting BOM reports to Dependency-Track
 ## Parameters
 ### Base Settings
 | Name    | Id |      Description      |  Required |
-|---------|-|:-------------|------|
+|---------|---|:-------------|------|
 | BOM File Path | bomFilePath |  The path where the BOM file is located. (e.g. 'directory/**/bom.xml'). | True |
 | Project Id | dtrackProjId |    The guid of the project in Dependency Track   | True |
 | API Key | dtrackAPIKey | The Dependency Track API key | True |
@@ -12,8 +12,9 @@ Azure DevOps extension for submitting BOM reports to Dependency-Track
 
 ### Threshold Options
 Setting these options will force the task to wait for the BOM analysis to be finished and the metrics to be recalculated before finishing the task.
+
 | Name    | Id |      Description      |  Required |
-|---------|-|:-------------|------|
+|---------|---|:-------------|------|
 | Action on Threshold | thresholdAction |  The result of the task if the threshold is attained. Values are `none`, `warn`, and `error`.   | False |
 | Critical Vulnerability Count | thresholdCritical | Maximum number of critical vulnerabilities to tolerate. A value of `-1` disables this threshold. | False |
 | High Vulnerability Count | thresholdHigh | Maximum number of high vulnerabilities to tolerate. A value of `-1` disables this threshold. | False |
@@ -60,7 +61,7 @@ steps:
 
 ## Thresholds Usage Example
 This example finishes the pipeline with a warning if the number of low vulnerabilities surpasse zero.
-![Low Threshold Surpassed Warning](/images/pipelineThresholdWarning.png?raw=true, "Low Threshold Surpassed Warning")
+![Low Threshold Surpassed Warning](https://raw.githubusercontent.com/gsoft-inc/azure-pipelines-dependency-track/master/images/pipelineThresholdWarning.png, "Low Threshold Surpassed Warning")
 ```yaml
 trigger:
 - master
