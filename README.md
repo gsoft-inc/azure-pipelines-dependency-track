@@ -59,7 +59,7 @@ steps:
 ```
 
 ## Thresholds Usage Example
-This example finish the pipeline with a warning if the number of low vulnerabilities surpasses zero.
+This example finishes the pipeline with a warning if the number of low vulnerabilities surpasses zero.
 ![Low Threshold Surpassed Warning](https://github.com/gsoft-inc/azure-pipelines-dependency-track/blob/feature/thresholds/images/pipelineThresholdWarning.png?raw=true, "Low Threshold Surpassed Warning")
 ```yaml
 trigger:
