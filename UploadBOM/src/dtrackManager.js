@@ -55,6 +55,8 @@ class DTrackManager {
       console.log('pull metrics')
       metrics = await this.getProjectMetricsAsync();
       lastOccurrence = new Date(metrics.lastOccurrence);
+      console.log(`lastOccurrence: ${lastOccurrence}`);
+      console.log(`lastBomImport: ${lastBomImport}`);
     } while (lastOccurrence < lastBomImport)
 
     return metrics;

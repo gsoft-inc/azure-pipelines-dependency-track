@@ -57,12 +57,12 @@ const run = async () => {
   const dtrackURI = tl.getInput('dtrackURI', true);
   const caFilePath = tl.getPathInput('caFilePath', false, true);
 
-  const thresholdAction = tl.getInput('thresholdAction', false);
-  const thresholdCritical = tl.getInput('thresholdCritical', false);
-  const thresholdHigh = tl.getInput('thresholdHigh', false);
-  const thresholdMedium = tl.getInput('thresholdMedium', false);
-  const thresholdLow = tl.getInput('thresholdLow', false);
-  const thresholdUnassigned = tl.getInput('thresholdUnassigned', false);
+  const thresholdAction = tl.getInput('thresholdAction', false) || 'none';
+  const thresholdCritical = tl.getInput('thresholdCritical', false) || -1;
+  const thresholdHigh = tl.getInput('thresholdHigh', false) || -1;
+  const thresholdMedium = tl.getInput('thresholdMedium', false) || -1;
+  const thresholdLow = tl.getInput('thresholdLow', false) || -1;
+  const thresholdUnassigned = tl.getInput('thresholdUnassigned', false) || -1;
 
   let caFile;
   if (tl.stats(caFilePath).isFile() ) {
