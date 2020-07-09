@@ -29,10 +29,7 @@ const run = async () => {
   }
 
   let caFile;
-  if (caFilePath && !tl.stats(caFilePath).isFile()) {
-    throw new Error(localize('FileNotFound', caFilePath));
-  } 
-  else if (caFilePath) {
+  if (tl.stats(caFilePath).isFile() ) {
     console.log(localize('ReadingCA', caFilePath));
     caFile = loadFile(caFilePath, 'UnableToReadCA');
   }
