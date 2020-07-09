@@ -150,7 +150,8 @@
     "ProcessingBOM": "Waitting for Dependency Track to finish processing the BOM.",
     "Polling": "Polling Dependency Track for update.",
     "LastBOMImport": "Last date of BOM import: %s",
-    "LastMetricUpdate": "Last date of Metrics update: %s"
+    "LastMetricUpdate": "Last date of Metrics update: %s",
+    "VulnCount": "Current Vulnerability Count:\nCritical: %s\nHigh:%s\nMedium: %s\nLow: %s\nUnassigned: %s\nSuppressed: %s"
   },
   "execution": {
     "Node10": {

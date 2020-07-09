@@ -29,13 +29,7 @@ async function validateThresholdsAsync(token, thresholdAction, thresholdExpert, 
     console.log(localize('RetrievingMetrics'));
     const metrics = await dtrackManager.waitMetricsRefresh();
 
-    console.log('Current Vulnerability Count:');
-    console.log(`Critical: ${metrics.critical}`);
-    console.log(`High: ${metrics.high}`);
-    console.log(`Medium: ${metrics.medium}`);
-    console.log(`Low: ${metrics.low}`);
-    console.log(`Unassigned: ${metrics.unassigned}`);
-    console.log(`Suppressed: ${metrics.suppressed}`);
+    console.log(localize('VulnCount', metrics.critical, metrics.high, metrics.medium, metrics.low, metrics.unassigned, metrics.suppressed));
 
     try {
       thresholdExpert.validateThresholds(metrics)
