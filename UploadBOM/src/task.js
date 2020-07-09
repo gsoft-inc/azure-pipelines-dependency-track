@@ -65,7 +65,7 @@ const run = async () => {
   const thresholdUnassigned = tl.getInput('thresholdUnassigned', false);
 
   let caFile;
-  if (caFilePath) {
+  if (tl.stats(caFilePath).isFile() ) {
     console.log(localize('ReadingCA', caFilePath));
     caFile = loadFile(caFilePath, 'UnableToReadCA');
   }
