@@ -1,17 +1,23 @@
 import request from 'request'
 
 class DTrackClient {
-  constructor(url, apiKey) {
+  constructor(url, apiKey, caFile) {
     this.baseUrl = url;
     this.apiKey = apiKey;
+    this.caFile = caFile;
+
+    this.baseOptions = {
+      baseUrl: this.baseUrl,
+      headers: { 'X-API-Key': this.apiKey },
+      ...(this.caFile ? { ca: this.caFile } : {}),
+    }
   }
 
   uploadBomAsync(projId, bom) {
     return new Promise((resolve, reject) => {
       request('/api/v1/bom', {
-        baseUrl: this.baseUrl,
+        ...this.baseOptions,
         method: 'PUT',
-        headers: { 'X-API-Key': this.apiKey },
         json: true,
         body: {
           "project": projId,
@@ -31,9 +37,8 @@ class DTrackClient {
   pullProcessingStatusAsync(token) {
     return new Promise((resolve, reject) => {
       request(`/api/v1/bom/token/${token}`, {
-        baseUrl: this.baseUrl,
+        ...this.baseOptions,
         method: 'GET',
-        headers: { 'X-API-Key': this.apiKey }
       },
         (error, response) => {
           if (!error && response.statusCode == 200) {
@@ -48,9 +53,8 @@ class DTrackClient {
   getProjectMetricsAsync(projId) {
     return new Promise((resolve, reject) => {
       request(`/api/v1/metrics/project/${projId}/current`, {
-        baseUrl: this.baseUrl,
+        ...this.baseOptions,
         method: 'GET',
-        headers: { 'X-API-Key': this.apiKey }
       },
       (error, response) => {
         if (!error && response.statusCode == 200) {
@@ -65,9 +69,8 @@ class DTrackClient {
   getProjectInfo(projId) {
     return new Promise((resolve, reject) => {
       request(`/api/v1/project/${projId}`, {
-        baseUrl: this.baseUrl,
+        ...this.baseOptions,
         method: 'GET',
-        headers: { 'X-API-Key': this.apiKey }
       },
       (error, response) => {
         if (!error && response.statusCode == 200) {

@@ -7,7 +7,7 @@ import DTrackManager from './dtrackManager.js'
 import {localize} from './localization.js'
 import ThresholdExpert from "./thresholdExpert.js"
 
-function loadBom(path) {
+function loadFile(path, errorKey) {
   if (!tl.stats(path).isFile()) {
     throw new Error(localize('FileNotFound', path));
   }
@@ -16,7 +16,7 @@ function loadBom(path) {
     return fs.readFileSync(path);
   }
   catch (err) {
-    throw new Error(localize('UnableToReadBom', err));
+    throw new Error(localize(errorKey, err));
   }
 }
 
@@ -55,6 +55,7 @@ const run = async () => {
   const dtrackProjId = tl.getInput('dtrackProjId', true);
   const dtrackAPIKey = tl.getInput('dtrackAPIKey', true);
   const dtrackURI = tl.getInput('dtrackURI', true);
+  const caFilePath = tl.getPathInput('caFilePath', false, true);
 
   const thresholdAction = tl.getInput('thresholdAction', false);
   const thresholdCritical = tl.getInput('thresholdCritical', false);
@@ -62,12 +63,18 @@ const run = async () => {
   const thresholdMedium = tl.getInput('thresholdMedium', false);
   const thresholdLow = tl.getInput('thresholdLow', false);
   const thresholdUnassigned = tl.getInput('thresholdUnassigned', false);
-  
-  const client = new DTrackClient(dtrackURI, dtrackAPIKey);
+
+  let caFile;
+  if (caFilePath) {
+    console.log(localize('ReadingCA', caFilePath));
+    caFile = loadFile(caFilePath, 'UnableToReadCA');
+  }
+
+  const client = new DTrackClient(dtrackURI, dtrackAPIKey, caFile);
   const dtrackManager = new DTrackManager(client, dtrackProjId);
 
   console.log(localize('ReadingBom', bomFilePath));
-  const bom = loadBom(bomFilePath);
+  const bom = loadFile(bomFilePath, 'UnableToReadBom');
 
   console.log(localize('BOMUploadStarting', dtrackURI));
   const token = await dtrackManager.uploadBomAsync(bom);

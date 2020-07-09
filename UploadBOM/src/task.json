@@ -25,6 +25,11 @@
       "name": "thresholds",
       "displayName": "Threshold Options",
       "isExpanded": false
+    },
+    {
+      "name": "sslSettings",
+      "displayName": "SSL Options",
+      "isExpanded": false
     }
   ],
   "inputs": [
@@ -118,12 +123,22 @@
       "required": false,
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of unassigned vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "caFilePath",
+      "label": "Trusted CA certificate",
+      "type": "filePath",
+      "required": false,
+      "groupName": "sslSettings",
+      "helpMarkDown": "File path to PEM encoded CA certificate. This setting is used when Dependency Track is using a self-signed certificate or an internal CA provider for it's TLS configuration."
     }
   ],
   "messages": {
     "FileNotFound": "BOM file path is not a file: %s",
-    "UnableToReadBom": "Unable to read bom fille: %s",
+    "UnableToReadBom": "Unable to read bom file: %s",
     "ReadingBom": "Reading BOM from location: %s",
+    "UnableToReadCA": "Unable to read certificate file: %s",
+    "ReadingCA": "Reading certificate from location: %s",
     "BOMUploadStarting": "Starting BOM upload to Dependency Track at url: %s",
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
     "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",

@@ -18,7 +18,15 @@ class DTrackManager {
     }
     catch (err) {
       if (err.error) {
-        throw new Error(localize('BOMUploadFailed', `${JSON.stringify(err.error)}`));
+        let errorMsg;
+        try {
+          errorMsg = JSON.stringify(err.error);
+        }
+        catch {
+          errorMsg = err.error;
+        }
+
+        throw new Error(localize('BOMUploadFailed', `${errorMsg}`));
       } else if (err.response) {
         throw new Error(localize('BOMUploadFailed', `${err.response.statusCode} - ${err.response.statusMessage}`));
       }
