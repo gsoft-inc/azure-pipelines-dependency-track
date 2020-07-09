@@ -35,6 +35,7 @@ async function validateThresholdsAsync(token, thresholdAction, thresholdExpert, 
     console.log(`Medium: ${metrics.medium}`);
     console.log(`Low: ${metrics.low}`);
     console.log(`Unassigned: ${metrics.unassigned}`);
+    console.log(`Suppressed: ${metrics.suppressed}`);
 
     try {
       thresholdExpert.validateThresholds(metrics)

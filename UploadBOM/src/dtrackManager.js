@@ -38,8 +38,8 @@ class DTrackManager {
   async waitBomProcessing(token) {
     let processing = true;
     while (processing) {
-      //await this.sleepAsync(2000);
-      console.log('pull status')
+      await this.sleepAsync(2000);
+      console.log(localize('Polling'));
       processing = await this.dtrackClient.pullProcessingStatusAsync(token);
     }
   }
@@ -47,15 +47,17 @@ class DTrackManager {
   async waitMetricsRefresh() {
     const lastBomImport = new Date((await this.getProjectInfo()).lastBomImport);
     let metrics = undefined;
+    let lastOccurrence = undefined;
       
     do {
-      //await this.sleepAsync(2000);
-      console.log('pull metrics')
+      await this.sleepAsync(2000);
+      console.log(localize('Polling'));
       metrics = await this.getProjectMetricsAsync();
+      lastOccurrence = new Date(metrics.lastOccurrence);
+    } while (lastOccurrence < lastBomImport)
 
-      console.log(`lastOccurrence: ${new Date(metrics.lastOccurrence)}`);
-      console.log(`lastBomImport: ${lastBomImport}`);
-    } while (new Date(metrics.lastOccurrence) < lastBomImport)
+    console.log(localize('LastBOMImport', lastBomImport));
+    console.log(localize('LastMetricUpdate', lastOccurrence));
 
     return metrics;
   }
