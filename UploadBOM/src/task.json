@@ -22,6 +22,11 @@
       "isExpanded": true
     },
     {
+      "name": "thresholds",
+      "displayName": "Threshold Options",
+      "isExpanded": false
+    },
+    {
       "name": "sslSettings",
       "displayName": "SSL Options",
       "isExpanded": false
@@ -61,6 +66,65 @@
       "helpMarkDown": "The URL to the Dependency Track platform"
     },
     {
+      "name": "thresholdAction",
+      "label": "Action on Threshold",
+      "type": "radio",
+      "defaultValue": "none",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "The result of the task if the threshold is attained.",
+      "options": {
+        "none": "No Action",
+        "warn": "Warning",
+        "error": "Error"
+      }
+    },
+    {
+      "name": "thresholdCritical",
+      "label": "Critical Vulnerability Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of critical vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdHigh",
+      "label": "High Vulnerability Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of high vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdMedium",
+      "label": "Medium Vulnerability Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of medium vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdLow",
+      "label": "Low Vulnerability Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of low vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
+      "name": "thresholdUnassigned",
+      "label": "Unassigned Vulnerability Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of unassigned vulnerabilities to tolerate.\nA value of -1 disables this threshold."
+    },
+    {
       "name": "caFilePath",
       "label": "Trusted CA certificate",
       "type": "filePath",
@@ -79,7 +143,20 @@
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
     "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",
     "TaskSucceed": "Finished task execution successfully!",
-    "TaskFailed": "Finished task execution with error - %s"
+    "TaskFailed": "Finished task execution with error - %s",
+    "ThresholdInNotAnInteger": "%s threshold needs to be an integer value.",
+    "VulnCountThresholdSurpassed": "%s vulnerability count threshold surpassed.",
+    "RetrievingMetrics": "Waitting for metrics to refresh.",
+    "ProcessingBOM": "Waitting for Dependency Track to finish processing the BOM.",
+    "Polling": "Polling Dependency Track for update.",
+    "LastBOMImport": "Last date of BOM import: %s",
+    "LastMetricUpdate": "Last date of Metrics update: %s",
+    "VulnCount": "Current Vulnerability Count:\nCritical: %s\nHigh:%s\nMedium: %s\nLow: %s\nUnassigned: %s\nSuppressed: %s",
+    "Critical": "Critical",
+    "High": "High",
+    "Medium": "Medium",
+    "Low": "Low",
+    "Unassigned": "Unassigned"
   },
   "execution": {
     "Node10": {

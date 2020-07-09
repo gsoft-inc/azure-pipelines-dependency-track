@@ -9,7 +9,6 @@ class DTrackClient {
     this.baseOptions = {
       baseUrl: this.baseUrl,
       headers: { 'X-API-Key': this.apiKey },
-      json: true,
       ...(this.caFile ? { ca: this.caFile } : {}),
     }
   }
@@ -19,6 +18,7 @@ class DTrackClient {
       request('/api/v1/bom', {
         ...this.baseOptions,
         method: 'PUT',
+        json: true,
         body: {
           "project": projId,
           "bom": bom.toString('base64')
@@ -31,6 +31,54 @@ class DTrackClient {
 
           reject({ error, response });
         });
+    });
+  }
+
+  pullProcessingStatusAsync(token) {
+    return new Promise((resolve, reject) => {
+      request(`/api/v1/bom/token/${token}`, {
+        ...this.baseOptions,
+        method: 'GET',
+      },
+        (error, response) => {
+          if (!error && response.statusCode == 200) {
+            resolve(JSON.parse(response.body).processing);
+          }
+
+          reject({ error, response });
+        });
+    });
+  }
+
+  getProjectMetricsAsync(projId) {
+    return new Promise((resolve, reject) => {
+      request(`/api/v1/metrics/project/${projId}/current`, {
+        ...this.baseOptions,
+        method: 'GET',
+      },
+      (error, response) => {
+        if (!error && response.statusCode == 200) {
+          resolve(response);
+        }
+        
+        reject({ error, response });
+      });
+    });
+  }
+
+  getProjectInfo(projId) {
+    return new Promise((resolve, reject) => {
+      request(`/api/v1/project/${projId}`, {
+        ...this.baseOptions,
+        method: 'GET',
+      },
+      (error, response) => {
+        if (!error && response.statusCode == 200) {
+          resolve(response);
+        }
+        
+        reject({ error, response });
+      });
     });
   }
 }
