@@ -70,7 +70,7 @@
     }
   ],
   "messages": {
-    "FileNotFound": "BOM file path is not a file: %s",
+    "FileNotFound": "File path is not a file: %s",
     "UnableToReadBom": "Unable to read bom file: %s",
     "ReadingBom": "Reading BOM from location: %s",
     "UnableToReadCA": "Unable to read certificate file: %s",
