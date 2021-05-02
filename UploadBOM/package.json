@@ -10,15 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "azure-pipelines-task-lib": "^2.9.3",
+    "@babel/core": "^7.14.0",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.14.0",
+    "azure-pipelines-task-lib": "^3.1.2",
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@types/node": "^12.12.35",
-    "@types/q": "^1.5.2"
+    "@babel/cli": "^7.13.16",
+    "@types/node": "^15.0.1",
+    "@types/q": "^1.5.4"
   }
 }
