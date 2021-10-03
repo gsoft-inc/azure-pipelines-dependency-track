@@ -1,0 +1,22 @@
+{
+  "name": "azure-pipelines-dependency-track",
+  "version": "1.0.0",
+  "description": "Azure DevOps extension for submitting BOM reports to Dependency-Track",
+  "main": "version-bump.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsoft-inc/azure-pipelines-dependency-track.git"
+  },
+  "author": "Edouard Shaar",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/gsoft-inc/azure-pipelines-dependency-track/issues"
+  },
+  "homepage": "https://github.com/gsoft-inc/azure-pipelines-dependency-track#readme",
+  "devDependencies": {
+    "minimist": "^1.2.5"
+  }
+}

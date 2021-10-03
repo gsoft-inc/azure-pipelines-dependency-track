@@ -27,7 +27,9 @@ jobs:
       working-directory: UploadBOM
 
     - name: Update Extension information
-      run: node version-bump.js --token ${{ secrets.marketplace_access_token }} --release-type prod
+      run: |
+        npm install
+        node version-bump.js --token ${{ secrets.marketplace_access_token }} --release-type prod
     
     - name: Package task
       run: tfx extension create --output-path PackageOutput
