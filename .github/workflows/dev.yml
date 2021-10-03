@@ -15,7 +15,7 @@ jobs:
         node-version: 12.x
       
     - name: Install Task Dependencies 
-      run: npm install
+      run: npm install -g tfx-cli
 
     - name: Build UploadBOM Task
       run: |
@@ -25,10 +25,10 @@ jobs:
       working-directory: UploadBOM
 
     - name: Update Extension information
-      run: npm run bump-version -- --token ${{ secrets.marketplace_access_token }} --release-type dev
+      run: node version-bump.js --token ${{ secrets.marketplace_access_token }} --release-type dev
     
     - name: Package task
-      run: npm run package
+      run: tfx extension create --output-path PackageOutput
     
     - name: Upload vsix Artifact
       uses: actions/upload-artifact@v1
@@ -59,4 +59,4 @@ jobs:
       
       - name: Publish to marketplace
         run: |
-          find ./package -name '*.vsix' -exec npm run publish:dev -- -t ${{ secrets.marketplace_access_token }} --vsix {} \;
+          find ./package -name '*.vsix' -exec tfx extension publish -- --publisher gsoft-dev -t ${{ secrets.marketplace_access_token }} --vsix {} \;
