@@ -51,7 +51,7 @@ jobs:
           node-version: 12.x
         
       - name: Install Dependencies 
-        run: npm install
+        run: npm install -g tfx-cli
 
       - name: Download artifact
         uses: actions/download-artifact@v1
