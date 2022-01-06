@@ -21,6 +21,10 @@ Setting these options will force the task to wait for the BOM analysis to be fin
 | Medium Vulnerability Count | thresholdMedium | Maximum number of medium vulnerabilities to tolerate. A value of `-1` disables this threshold. | False |
 | Low Vulnerability Count | thresholdLow | Maximum number of low vulnerabilities to tolerate. A value of `-1` disables this threshold. | False |
 | Unassigned Vulnerability Count | thresholdUnassigned | Maximum number of unassigned vulnerabilities to tolerate. A value of `-1` disables this threshold. | False |
+| Fail Policy Violation Count | thresholdpolicyViolationsFail | Maximum number of failed policy violations to tolerate. A value of `-1` disables this threshold. | False |
+| Warn Policy Violation Count | thresholdpolicyViolationsWarn | Maximum number of warn policy violations to tolerate. A value of `-1` disables this threshold. | False |
+| Info Policy Violation Count | thresholdpolicyViolationsInfo | Maximum number of info policy violations to tolerate. A value of `-1` disables this threshold. | False |
+| Total Policy Violation Count | thresholdpolicyViolationsTotal | Maximum number of Total policy violations to tolerate. A value of `-1` disables this threshold. | False |
 
 ### SSL Options
 | Name    | Id |      Description      |  Required |
