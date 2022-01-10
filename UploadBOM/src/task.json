@@ -124,6 +124,42 @@
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of unassigned vulnerabilities to tolerate.\nA value of -1 disables this threshold."
     },
+     {
+      "name": "thresholdpolicyViolationsFail",
+      "label": "Fail Policy Violation Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of failed policy violations to tolerate.\nA value of -1 disables this threshold."
+    },
+     {
+      "name": "thresholdpolicyViolationsWarn",
+      "label": "Warn Policy Violation Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of warn policy violations to tolerate.\nA value of -1 disables this threshold."
+    },
+     {
+      "name": "thresholdpolicyViolationsInfo",
+      "label": "Info Policy Violation Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of info policy violations to tolerate.\nA value of -1 disables this threshold."
+    },
+     {
+      "name": "thresholdpolicyViolationsTotal",
+      "label": "Total Policy Violation Count",
+      "type": "string",
+      "defaultValue": "-1",
+      "required": false,
+      "groupName": "thresholds",
+      "helpMarkDown": "Maximum number of Total policy violations to tolerate.\nA value of -1 disables this threshold."
+    },
     {
       "name": "caFilePath",
       "label": "Trusted CA certificate",
@@ -156,7 +192,8 @@
     "High": "High",
     "Medium": "Medium",
     "Low": "Low",
-    "Unassigned": "Unassigned"
+    "Unassigned": "Unassigned",
+    "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s"    
   },
   "execution": {
     "Node10": {

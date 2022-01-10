@@ -30,6 +30,7 @@ async function validateThresholdsAsync(token, thresholdAction, thresholdExpert, 
     const metrics = await dtrackManager.waitMetricsRefresh();
 
     console.log(localize('VulnCount', metrics.critical, metrics.high, metrics.medium, metrics.low, metrics.unassigned, metrics.suppressed));
+    console.log(localize('PolicyViolationCount', metrics.policyViolationsFail,metrics.policyViolationsWarn,metrics.policyViolationsInfo,metrics.policyViolationsTotal));
 
     try {
       thresholdExpert.validateThresholds(metrics)
@@ -59,6 +60,11 @@ const run = async () => {
   const thresholdLow = tl.getInput('thresholdLow', false) || -1;
   const thresholdUnassigned = tl.getInput('thresholdUnassigned', false) || -1;
 
+  const thresholdpolicyViolationsFail = tl.getInput('thresholdpolicyViolationsFail', false) || -1;
+  const thresholdpolicyViolationsWarn = tl.getInput('thresholdpolicyViolationsWarn', false) || -1;
+  const thresholdpolicyViolationsInfo = tl.getInput('thresholdpolicyViolationsInfo', false) || -1;
+  const thresholdpolicyViolationsTotal = tl.getInput('thresholdpolicyViolationsTotal', false) || -1;
+
   let caFile;
   if (tl.stats(caFilePath).isFile() ) {
     console.log(localize('ReadingCA', caFilePath));
@@ -80,7 +86,11 @@ const run = async () => {
     Number.parseInt(thresholdHigh), 
     Number.parseInt(thresholdMedium), 
     Number.parseInt(thresholdLow), 
-    Number.parseInt(thresholdUnassigned));
+    Number.parseInt(thresholdUnassigned),
+    Number.parseInt(thresholdpolicyViolationsFail),
+    Number.parseInt(thresholdpolicyViolationsWarn),
+    Number.parseInt(thresholdpolicyViolationsInfo),
+    Number.parseInt(thresholdpolicyViolationsTotal));
   await validateThresholdsAsync(token, thresholdAction, thresholdExpert, dtrackManager);
 };
 
