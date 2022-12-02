@@ -193,7 +193,8 @@
     "Medium": "Medium",
     "Low": "Low",
     "Unassigned": "Unassigned",
-    "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s"    
+    "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s",
+    "PollingFailed": "Polling Dependency Track for update Failed: %s"   
   },
   "execution": {
     "Node10": {
