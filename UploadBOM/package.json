@@ -13,12 +13,12 @@
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.6",
-    "azure-pipelines-task-lib": "^3.1.9",
+    "azure-pipelines-task-lib": "^4.1.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
-    "@types/node": "^16.10.2",
+    "@types/node": "^18.11.10",
     "@types/q": "^1.5.5"
   }
 }

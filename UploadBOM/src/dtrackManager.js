@@ -17,21 +17,7 @@ class DTrackManager {
       return res.body.token;
     }
     catch (err) {
-      if (err.error) {
-        let errorMsg;
-        try {
-          errorMsg = JSON.stringify(err.error);
-        }
-        catch {
-          errorMsg = err.error;
-        }
-
-        throw new Error(localize('BOMUploadFailed', `${errorMsg}`));
-      } else if (err.response) {
-        throw new Error(localize('BOMUploadFailed', `${err.response.statusCode} - ${err.response.statusMessage}`));
-      }
-
-      throw new Error(localize('BOMUploadFailed', `${err}`));
+      throw new Error(localize('BOMUploadFailed', getErrorMessage(err)));
     }
   }
 
@@ -40,7 +26,12 @@ class DTrackManager {
     while (processing) {
       await this.sleepAsync(2000);
       console.log(localize('Polling'));
-      processing = await this.dtrackClient.pullProcessingStatusAsync(token);
+      try {
+        processing = await this.dtrackClient.pullProcessingStatusAsync(token);
+      }
+      catch (err) {
+        throw new Error(localize('PollingFailed', getErrorMessage(err)));
+      }
     }
   }
 
@@ -63,12 +54,35 @@ class DTrackManager {
   }
 
   async getProjectMetricsAsync() {
-    const res = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
-    return JSON.parse(res.body);
+    try {
+      const res = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+      return JSON.parse(res.body);
+    }
+    catch (err) {
+      throw new Error(localize('PollingFailed', getErrorMessage(err)));
+    }
   }
 
   sleepAsync(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  getErrorMessage(err){
+    if (err.error) {
+      let errorMsg;
+      try {
+        errorMsg = JSON.stringify(err.error);
+      }
+      catch {
+        errorMsg = err.error;
+      }
+
+      return `${errorMsg}`;
+    } else if (err.response) {
+      return `${err.response.statusCode} - ${err.response.statusMessage}`;
+    }
+
+    return `${err}`;
   }
 }
 export default DTrackManager;

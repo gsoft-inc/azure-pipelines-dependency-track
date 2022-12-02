@@ -42,16 +42,17 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install
-    npm install -g @cyclonedx/bom
+    npm install -g @cyclonedx/cyclonedx-npm
   displayName: 'npm install'
 
 - script: |
-    cyclonedx-bom -d -o '$(Agent.TempDirectory)/bom.xml'
+    cyclonedx-npm --version
+    cyclonedx-npm --output-file '$(Agent.TempDirectory)/bom.xml'
   displayName: 'Create BOM'
 
 - task: upload-bom-dtrack-task@1
@@ -76,16 +77,17 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install
-    npm install -g @cyclonedx/bom
+    npm install -g @cyclonedx/cyclonedx-npm
   displayName: 'npm install'
 
 - script: |
-    cyclonedx-bom -d -o '$(Agent.TempDirectory)/bom.xml'
+    cyclonedx-npm --version
+    cyclonedx-npm --output-file '$(Agent.TempDirectory)/bom.xml'
   displayName: 'Create BOM'
 
 - task: upload-bom-dtrack-task@1
