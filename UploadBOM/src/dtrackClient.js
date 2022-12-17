@@ -42,6 +42,7 @@ class DTrackClient {
       },
         (error, response) => {
           if (!error && response.statusCode == 200) {
+            console.log(response.body);
             resolve(JSON.parse(response.body).processing);
           }
 

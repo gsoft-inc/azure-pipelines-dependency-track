@@ -8,12 +8,14 @@ class DTrackManager {
 
   async getProjectInfo() {
     const res = await this.dtrackClient.getProjectInfo(this.projectId);
+    console.log(res.body);
     return JSON.parse(res.body);
   }
 
   async uploadBomAsync(bom) {
     try {
       const res = await this.dtrackClient.uploadBomAsync(this.projectId, bom);
+      console.log(res.body);
       return res.body.token;
     }
     catch (err) {
@@ -56,6 +58,7 @@ class DTrackManager {
   async getProjectMetricsAsync() {
     try {
       const res = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+      console.log(res.body);
       return JSON.parse(res.body);
     }
     catch (err) {
