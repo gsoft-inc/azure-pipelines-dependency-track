@@ -17,7 +17,7 @@ class DTrackManager {
       return res.body.token;
     }
     catch (err) {
-      throw new Error(localize('BOMUploadFailed', getErrorMessage(err)));
+      throw new Error(localize('BOMUploadFailed', this.getErrorMessage(err)));
     }
   }
 
@@ -30,7 +30,7 @@ class DTrackManager {
         processing = await this.dtrackClient.pullProcessingStatusAsync(token);
       }
       catch (err) {
-        throw new Error(localize('PollingFailed', getErrorMessage(err)));
+        throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
       }
     }
   }
@@ -59,7 +59,7 @@ class DTrackManager {
       return JSON.parse(res.body);
     }
     catch (err) {
-      throw new Error(localize('PollingFailed', getErrorMessage(err)));
+      throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
     }
   }
 
