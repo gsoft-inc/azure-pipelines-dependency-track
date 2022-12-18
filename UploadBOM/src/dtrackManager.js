@@ -7,16 +7,14 @@ class DTrackManager {
   }
 
   async getProjectInfo() {
-    const res = await this.dtrackClient.getProjectInfo(this.projectId);
-    console.log(res.body);
-    return JSON.parse(res.body);
+    const info = await this.dtrackClient.getProjectInfo(this.projectId);
+    return info;
   }
 
   async uploadBomAsync(bom) {
     try {
-      const res = await this.dtrackClient.uploadBomAsync(this.projectId, bom);
-      console.log(res.body);
-      return res.body.token;
+      const token = await this.dtrackClient.uploadBomAsync(this.projectId, bom);
+      return token;
     }
     catch (err) {
       throw new Error(localize('BOMUploadFailed', this.getErrorMessage(err)));
@@ -45,21 +43,22 @@ class DTrackManager {
     do {
       await this.sleepAsync(2000);
       console.log(localize('Polling'));
-      metrics = await this.getProjectMetricsAsync();
-      lastOccurrence = new Date(metrics.lastOccurrence);
+      try {
+        lastOccurrence = await this.dtrackClient.getLastMetricCalculationDate(this.projectId);
+      }
+      catch (err) {
+        throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
+      }
     } while (lastOccurrence < lastBomImport)
 
     console.log(localize('LastBOMImport', lastBomImport));
     console.log(localize('LastMetricUpdate', lastOccurrence));
-
-    return metrics;
   }
 
   async getProjectMetricsAsync() {
     try {
-      const res = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
-      console.log(res.body);
-      return JSON.parse(res.body);
+      const metrics = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+      return metrics;
     }
     catch (err) {
       throw new Error(localize('PollingFailed', this.getErrorMessage(err)));

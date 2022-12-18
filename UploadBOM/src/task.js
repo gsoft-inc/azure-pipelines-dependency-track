@@ -27,7 +27,8 @@ async function validateThresholdsAsync(token, thresholdAction, thresholdExpert, 
     await dtrackManager.waitBomProcessing(token);
 
     console.log(localize('RetrievingMetrics'));
-    const metrics = await dtrackManager.waitMetricsRefresh();
+    await dtrackManager.waitMetricsRefresh();
+    const metrics = await dtrackManager.getProjectMetricsAsync();
 
     console.log(localize('VulnCount', metrics.critical, metrics.high, metrics.medium, metrics.low, metrics.unassigned, metrics.suppressed));
     console.log(localize('PolicyViolationCount', metrics.policyViolationsFail,metrics.policyViolationsWarn,metrics.policyViolationsInfo,metrics.policyViolationsTotal));
