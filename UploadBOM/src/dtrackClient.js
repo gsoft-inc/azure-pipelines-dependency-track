@@ -8,6 +8,7 @@ class DTrackClient {
 
     this.baseOptions = {
       baseUrl: this.baseUrl,
+      json: true,
       headers: { 'X-API-Key': this.apiKey },
       ...(this.caFile ? { ca: this.caFile } : {}),
     }
@@ -18,7 +19,6 @@ class DTrackClient {
       request('/api/v1/bom', {
         ...this.baseOptions,
         method: 'PUT',
-        json: true,
         body: {
           "project": projId,
           "bom": bom.toString('base64')
@@ -26,7 +26,7 @@ class DTrackClient {
       },
         (error, response) => {
           if (!error && response.statusCode == 200) {
-            resolve(JSON.parse(response.body).token);
+            resolve(response.body.token);
           }
 
           reject({ error, response });
@@ -42,7 +42,7 @@ class DTrackClient {
       },
         (error, response) => {
           if (!error && response.statusCode == 200) {
-            resolve(JSON.parse(response.body).processing);
+            resolve(response.body.processing);
           }
 
           reject({ error, response });
@@ -58,7 +58,7 @@ class DTrackClient {
       },
       (error, response) => {
         if (!error && response.statusCode == 200) {
-          resolve(JSON.parse(response.body));
+          resolve(response.body);
         }
         
         reject({ error, response });
@@ -79,7 +79,7 @@ class DTrackClient {
 
           // Dependency Track might return an empty response body if metrics have never been calculated before.
           if(response.body) {
-            lastOccurrence = new Date(JSON.parse(response.body).lastOccurrence);
+            lastOccurrence = new Date(response.body.lastOccurrence);
           } 
 
           resolve(lastOccurrence);
@@ -98,7 +98,7 @@ class DTrackClient {
       },
       (error, response) => {
         if (!error && response.statusCode == 200) {
-          resolve(JSON.parse(response.body));
+          resolve(response.body);
         }
         
         reject({ error, response });
