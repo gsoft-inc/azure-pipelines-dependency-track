@@ -1,6 +1,8 @@
 # Dependency Track for Azure DevOps Pipelines
 Azure DevOps extension for submitting BOM reports to Dependency-Track
 
+> Note: BOM files with Byte-Order-Marks are not supported by this extension. This is an issue with Depenedency Track prior to version 3.8.0. [See this issue for the Dependency Track fix](https://github.com/DependencyTrack/dependency-track/issues/2312) [and this issue for this extension.](https://github.com/gsoft-inc/azure-pipelines-dependency-track/issues/28)
+
 ## Parameters
 ### Base Settings
 | Name    | Id |      Description      |  Required |
