@@ -11,6 +11,14 @@ class DTrackManager {
     return info;
   }
 
+  async getProjectUUID(projectName, projectVersion){
+    const projectUUID = await this.dtrackClient.getProjectUUID(projectName, projectVersion);
+    return projectUUID;
+  }
+  catch (err) {
+    throw new Error(localize('GetProjectUUIDFailed', this.getErrorMessage(err)))
+  }
+
   async uploadBomAsync(bom) {
     try {
       const token = await this.dtrackClient.uploadBomAsync(this.projectId, bom);

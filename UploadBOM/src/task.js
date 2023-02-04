@@ -49,7 +49,9 @@ const run = async () => {
   tl.setResourcePath(path.join(__dirname, 'task.json'));
 
   const bomFilePath = tl.getPathInput('bomFilePath', true, true);
-  const dtrackProjId = tl.getInput('dtrackProjId', true);
+  const dtrackProjId = tl.getInput('dtrackProjId', false);
+  const dtrackProjName = tl.getInput('dtrackProjName', false);
+  const dtrackProjVer = tl.getInput('dtrackProjVer', false);
   const dtrackAPIKey = tl.getInput('dtrackAPIKey', true);
   const dtrackURI = tl.getInput('dtrackURI', true);
   const caFilePath = tl.getPathInput('caFilePath', false, true);
@@ -73,7 +75,12 @@ const run = async () => {
   }
 
   const client = new DTrackClient(dtrackURI, dtrackAPIKey, caFile);
-  const dtrackManager = new DTrackManager(client, dtrackProjId);
+  let dtrackManager = new DTrackManager(client, dtrackProjId);
+
+  if (dtrackProjId == null) {
+    dtrackProjId = dtrackManager.getProjectUUID()
+    dtrackManager = new DTrackManager(client, dtrackProjId)
+  } 
 
   console.log(localize('ReadingBom', bomFilePath));
   const bom = loadFile(bomFilePath, 'UnableToReadBom');
