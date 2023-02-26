@@ -1,61 +1,78 @@
 import {localize} from './localization.js'
+import Utils from './utils.js'
 
-class DTrackManager {
-  constructor(dtrackClient, projectId) {
+class DtrackBaseManager {
+  constructor(dtrackClient) {
     this.dtrackClient = dtrackClient;
-    this.projectId = projectId;
   }
 
-  async getProjectInfo() {
-    const info = await this.dtrackClient.getProjectInfo(this.projectId);
+  async getProjetUUID(name, version) {
+    if (name && version) {
+      try {
+        const projectId = await this.dtrackClient.getProjectUUID(name, version);
+        return projectId;
+      }
+      catch (err) {
+        console.log(Utils.getErrorMessage(err));
+        throw new Error(localize('ProjectNotFound', name, version));
+      }
+    }
+    else {
+      throw new Error(localize('MissingProjectInfo'));
+    }
+  }
+
+  async getProjectInfo(projectId) {
+    const info = await this.dtrackClient.getProjectInfo(projectId);
     return info;
   }
 
-  async getProjectUUID(projectName, projectVersion){
-    const projectUUID = await this.dtrackClient.getProjectUUID(projectName, projectVersion);
-    return projectUUID;
-  }
-  catch (err) {
-    throw new Error(localize('GetProjectUUIDFailed', this.getErrorMessage(err)))
-  }
-
-  async uploadBomAsync(bom) {
+  async uploadBomAsync(projectId, bom) {
     try {
-      const token = await this.dtrackClient.uploadBomAsync(this.projectId, bom);
+      const token = await this.dtrackClient.uploadBomAsync(projectId, bom);
       return token;
     }
     catch (err) {
-      throw new Error(localize('BOMUploadFailed', this.getErrorMessage(err)));
+      throw new Error(localize('BOMUploadFailed', Utils.getErrorMessage(err)));
+    }
+  }
+
+  async uploadBomAndCreateProjectAsync(name, version, bom) {
+    try {
+      const token = await this.dtrackClient.uploadBomAndCreateProjectAsync(name, version, bom);
+      return token;
+    }
+    catch (err) {
+      throw new Error(localize('BOMUploadFailed', Utils.getErrorMessage(err)));
     }
   }
 
   async waitBomProcessing(token) {
     let processing = true;
     while (processing) {
-      await this.sleepAsync(2000);
+      await Utils.sleepAsync(2000);
       console.log(localize('Polling'));
       try {
         processing = await this.dtrackClient.pullProcessingStatusAsync(token);
       }
       catch (err) {
-        throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
+        throw new Error(localize('PollingFailed', Utils.getErrorMessage(err)));
       }
     }
   }
 
-  async waitMetricsRefresh() {
+  async waitMetricsRefresh(projectId) {
     const lastBomImport = new Date((await this.getProjectInfo()).lastBomImport);
-    let metrics = undefined;
     let lastOccurrence = undefined;
       
     do {
-      await this.sleepAsync(2000);
+      await Utils.sleepAsync(2000);
       console.log(localize('Polling'));
       try {
-        lastOccurrence = await this.dtrackClient.getLastMetricCalculationDate(this.projectId);
+        lastOccurrence = await this.dtrackClient.getLastMetricCalculationDate(projectId);
       }
       catch (err) {
-        throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
+        throw new Error(localize('PollingFailed', Utils.getErrorMessage(err)));
       }
     } while (lastOccurrence < lastBomImport)
 
@@ -63,36 +80,14 @@ class DTrackManager {
     console.log(localize('LastMetricUpdate', lastOccurrence));
   }
 
-  async getProjectMetricsAsync() {
+  async getProjectMetricsAsync(projectId) {
     try {
-      const metrics = await this.dtrackClient.getProjectMetricsAsync(this.projectId);
+      const metrics = await this.dtrackClient.getProjectMetricsAsync(projectId);
       return metrics;
     }
     catch (err) {
-      throw new Error(localize('PollingFailed', this.getErrorMessage(err)));
+      throw new Error(localize('PollingFailed', Utils.getErrorMessage(err)));
     }
-  }
-
-  sleepAsync(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  getErrorMessage(err){
-    if (err.error) {
-      let errorMsg;
-      try {
-        errorMsg = JSON.stringify(err.error);
-      }
-      catch {
-        errorMsg = err.error;
-      }
-
-      return `${errorMsg}`;
-    } else if (err.response) {
-      return `${err.response.statusCode} - ${err.response.statusMessage}`;
-    }
-
-    return `${err}`;
   }
 }
-export default DTrackManager;
+export default DtrackBaseManager;

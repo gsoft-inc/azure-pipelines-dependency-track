@@ -34,20 +34,61 @@
   ],
   "inputs": [
     {
+      "name": "nameOrId",
+      "type": "pickList",
+      "label": "Project Identifier",
+      "defaultValue": "",
+      "required": true,
+      "groupName": "baseSettings",
+      "options": {
+          "uuid": "Object Identifier",
+          "name": "Name and Version"                
+      },
+      "helpMarkDown": "Select how to target the Dependency Track Project."
+    },
+    {
+      "name": "dtrackProjId",
+      "label": "Project Id",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The guid of the project in Dependency Track",
+      "visibleRule": "nameOrId = uuid"
+    },
+    {
+      "name": "dtrackProjName",
+      "label": "Project Name",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The name of the project in Dependency Track",
+      "visibleRule": "nameOrId = name"
+    },
+    {
+      "name": "dtrackProjVersion",
+      "label": "Project Version",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The version of the project in Dependency Track",
+      "visibleRule": "nameOrId = name"
+    },
+    {
+      "name": "dtrackProjAutoCreate",
+      "label": "Project Auto Create",
+      "type": "boolean",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "When set to TRUE and the project in Dependency Track does not exist, it will be created. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.",
+      "visibleRule": "nameOrId = name"
+    },
+    {
       "name": "bomFilePath",
       "label": "BOM File Path",
       "type": "filePath",
       "required": true,
       "groupName": "baseSettings",
       "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
-    },
-    {
-      "name": "dtrackProjId",
-      "label": "Project Id",
-      "type": "string",
-      "required": true,
-      "groupName": "baseSettings",
-      "helpMarkDown": "The guid of the project in Dependency Track"
     },
     {
       "name": "dtrackAPIKey",

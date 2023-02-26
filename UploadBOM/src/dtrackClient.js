@@ -33,10 +33,32 @@ class DTrackClient {
         });
     });
   }
+
+  uploadBomAndCreateProjectAsync(name, version, bom) {
+    return new Promise((resolve, reject) => {
+      request('/api/v1/bom', {
+        ...this.baseOptions,
+        method: 'PUT',
+        body: {
+          "autoCreate": true,
+          "projectName": name,
+          "projectVersion": version,
+          "bom": bom.toString('base64')
+        }
+      },
+        (error, response) => {
+          if (!error && response.statusCode == 200) {
+            resolve(response.body.token);
+          }
+
+          reject({ error, response });
+        });
+    });
+  }
   
   getProjectUUID(projectName, projectVersion) {
     return new Promise((resolve, reject) => {
-            request(`/api/v1/project/lookup/name=${projectName}&version=${projectVersion}`, {
+        request(`/api/v1/project/lookup?name=${projectName}&version=${projectVersion}`, {
         ...this.baseOptions,
         method: 'GET',
       },
