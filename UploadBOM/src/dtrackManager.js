@@ -1,7 +1,7 @@
 import {localize} from './localization.js'
 import Utils from './utils.js'
 
-class DtrackBaseManager {
+class DtrackManager {
   constructor(dtrackClient) {
     this.dtrackClient = dtrackClient;
   }
@@ -90,4 +90,4 @@ class DtrackBaseManager {
     }
   }
 }
-export default DtrackBaseManager;
+export default DtrackManager;
