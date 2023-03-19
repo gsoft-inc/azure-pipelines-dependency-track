@@ -32,23 +32,26 @@ const run = async () => {
     caFile = loadFile(params.caFilePath, 'UnableToReadCA');
   }
 
-  const client = new DTrackClient(params.dtrackURI, params.dtrackAPIKey, caFile);
-  const dtrackManager = new DTrackManager(client);
-
-  let projectId = params.projectId;
-  if (!projectId) {
-    projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
-  }
-
   console.log(localize('ReadingBom', params.bomFilePath));
   const bom = loadFile(params.bomFilePath, 'UnableToReadBom');
-
-  console.log(localize('BOMUploadStarting', params.dtrackURI));
+  
+  const client = new DTrackClient(params.dtrackURI, params.dtrackAPIKey, caFile);
+  const dtrackManager = new DTrackManager(client);
+  
+  let projectId = params.projectId;
   let token = undefined;
+  
+  console.log(localize('BOMUploadStarting', params.dtrackURI));
+
   if (params.isProjectAutoCreated) {
     token = await dtrackManager.uploadBomAndCreateProjectAsync(params.projectName, params.projectVersion, bom);
+    projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
   }
   else {
+    if (!projectId) {
+      projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
+    }
+
     token = await dtrackManager.uploadBomAsync(projectId, bom);
   }
   console.log(localize('BOMUploadSucceed', token));

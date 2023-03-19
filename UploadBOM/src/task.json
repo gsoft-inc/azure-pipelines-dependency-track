@@ -34,26 +34,12 @@
   ],
   "inputs": [
     {
-      "name": "nameOrId",
-      "type": "pickList",
-      "label": "Project Identifier",
-      "defaultValue": "",
-      "required": true,
-      "groupName": "baseSettings",
-      "options": {
-          "uuid": "Object Identifier",
-          "name": "Name and Version"                
-      },
-      "helpMarkDown": "Select how to target the Dependency Track Project."
-    },
-    {
       "name": "dtrackProjId",
       "label": "Project Id",
       "type": "string",
       "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "The guid of the project in Dependency Track",
-      "visibleRule": "nameOrId = uuid"
+      "helpMarkDown": "The guid of the project in Dependency Track. Required if project name and version are not specified."
     },
     {
       "name": "dtrackProjName",
@@ -61,8 +47,7 @@
       "type": "string",
       "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "The name of the project in Dependency Track",
-      "visibleRule": "nameOrId = name"
+      "helpMarkDown": "The name of the project in Dependency Track. Required if project id is not specified."
     },
     {
       "name": "dtrackProjVersion",
@@ -70,8 +55,7 @@
       "type": "string",
       "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "The version of the project in Dependency Track",
-      "visibleRule": "nameOrId = name"
+      "helpMarkDown": "The version of the project in Dependency Track. Required if project id is not specified."
     },
     {
       "name": "dtrackProjAutoCreate",
@@ -79,8 +63,7 @@
       "type": "boolean",
       "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "When set to TRUE and the project in Dependency Track does not exist, it will be created. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.",
-      "visibleRule": "nameOrId = name"
+      "helpMarkDown": "When set to TRUE and the project in Dependency Track does not exist, it will be created. Requires project name and version to be specified. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission."
     },
     {
       "name": "bomFilePath",
@@ -235,10 +218,12 @@
     "Low": "Low",
     "Unassigned": "Unassigned",
     "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s",
-    "PollingFailed": "Polling Dependency Track for update Failed: %s"   
+    "PollingFailed": "Polling Dependency Track for update Failed: %s"  ,
+    "ProjectNotFound" : "Unable to find Dependency Track project with name '%s' and version '%s'",
+    "MissingProjectInfo": "dependency Track project name and version required." 
   },
   "execution": {
-    "Node10": {
+    "Node18": {
       "target": "task.js"
     }
   }
