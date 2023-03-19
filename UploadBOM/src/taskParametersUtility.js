@@ -3,7 +3,6 @@ import * as tl from "azure-pipelines-task-lib/task"
 class TaskParametersUtility {
     static GetParameters() {
         let params = {
-            nameOrId: tl.getInput('nameOrId', true),
             projectId: tl.getInput('dtrackProjId', false),
             projectName: tl.getInput('dtrackProjName', false),
             projectVersion: tl.getInput('dtrackProjVersion', false),
