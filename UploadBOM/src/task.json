@@ -223,7 +223,7 @@
     "MissingProjectInfo": "dependency Track project name and version required." 
   },
   "execution": {
-    "Node18": {
+    "Node10": {
       "target": "task.js"
     }
   }
