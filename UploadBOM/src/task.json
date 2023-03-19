@@ -75,7 +75,7 @@
     },
     {
       "name": "dtrackProjAutoCreate",
-      "label": "Project Auto Create",
+      "label": "Auto Create Project",
       "type": "boolean",
       "required": false,
       "groupName": "baseSettings",

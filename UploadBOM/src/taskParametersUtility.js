@@ -6,7 +6,7 @@ class TaskParametersUtility {
             nameOrId: tl.getInput('nameOrId', true),
             projectId: tl.getInput('dtrackProjId', false),
             projectName: tl.getInput('dtrackProjName', false),
-            projectVersion: tl.getInput('dtrackProjVer', false),
+            projectVersion: tl.getInput('dtrackProjVersion', false),
             isProjectAutoCreated: tl.getBoolInput('dtrackProjAutoCreate', false),
             bomFilePath: tl.getPathInput('bomFilePath', true, true),
             dtrackAPIKey: tl.getInput('dtrackAPIKey', true),
