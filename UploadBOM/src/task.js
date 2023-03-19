@@ -5,7 +5,7 @@ import * as path from 'path'
 import DTrackClient from './dtrackClient.js'
 import DTrackManager from './dtrackManager.js'
 import { localize } from './localization.js'
-import TaskParametersUtility from "./TaskParametersUtility.js"
+import TaskParametersUtility from "./taskParametersUtility.js"
 import ThresholdExpert from "./thresholdExpert.js"
 
 function loadFile(path, errorKey) {
