@@ -25,6 +25,7 @@ const run = async () => {
   tl.setResourcePath(path.join(__dirname, 'task.json'));
 
   const params = TaskParametersUtility.GetParameters();
+  TaskParametersUtility.ValidateParameters(params);
 
   let caFile;
   if (tl.stats(params.caFilePath).isFile()) {
@@ -41,22 +42,20 @@ const run = async () => {
   let projectId = params.projectId;
   let token = undefined;
   
-  console.log(localize('BOMUploadStarting', params.dtrackURI));
-
-  if (params.isProjectAutoCreated === true) {
-    console.log("isProjectAutoCreated == true " + params.isProjectAutoCreated);
+  if (params.isProjectAutoCreated) {
+    console.log(localize('BOMUploadAndCreateStarting', params.dtrackURI, params.projectName, params.projectVersion));
     token = await dtrackManager.uploadBomAndCreateProjectAsync(params.projectName, params.projectVersion, bom);
   }
   else {
-    console.log("isProjectAutoCreated == false " + params.isProjectAutoCreated);
     if (!projectId) {
-      console.log("No project Id");
+      console.log(localize('GetProjectUuidStarting', params.projectName, params.projectVersion));
       projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
     }
-    console.log("upload with Id" + projectId);
 
+    console.log(localize('BOMUploadWithIdStarting', projectId, params.dtrackURI));
     token = await dtrackManager.uploadBomAsync(projectId, bom);
   }
+
   console.log(localize('BOMUploadSucceed', token));
 
   const thresholdExpert = new ThresholdExpert(
@@ -76,6 +75,7 @@ const run = async () => {
     await dtrackManager.waitBomProcessing(token);
 
     if (!projectId) {
+      console.log(localize('GetProjectUuidStarting', params.projectName, params.projectVersion));
       projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
     }
 

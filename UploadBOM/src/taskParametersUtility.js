@@ -1,4 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task"
+import {localize} from './localization.js'
 
 class TaskParametersUtility {
     static GetParameters() {
@@ -26,6 +27,18 @@ class TaskParametersUtility {
         };
 
         return params;
+    }
+
+    static ValidateParameters(params) {
+        if (!params.projectName || !params.projectVersion) {
+            if (params.isProjectAutoCreated) {
+                throw new Error(localize("MissingProjectInfoWhenAutoCreate"));
+            }
+
+            if (!params.projectId) {
+                throw new Error(localize("MissingProjectInfoWhenNoProjectId"));
+            }
+        }
     }
 }
 export default TaskParametersUtility;

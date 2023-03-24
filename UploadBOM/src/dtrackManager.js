@@ -7,18 +7,13 @@ class DtrackManager {
   }
 
   async getProjetUUID(name, version) {
-    if (name && version) {
-      try {
-        const projectId = await this.dtrackClient.getProjectUUID(name, version);
-        return projectId;
-      }
-      catch (err) {
-        console.log(Utils.getErrorMessage(err));
-        throw new Error(localize('ProjectNotFound', name, version));
-      }
+    try {
+      const projectId = await this.dtrackClient.getProjectUUID(name, version);
+      return projectId;
     }
-    else {
-      throw new Error(localize('MissingProjectInfo'));
+    catch (err) {
+      console.log(Utils.getErrorMessage(err));
+      throw new Error(localize('ProjectNotFound', name, version));
     }
   }
 
