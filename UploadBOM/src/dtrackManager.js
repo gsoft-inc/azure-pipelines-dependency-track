@@ -57,7 +57,7 @@ class DtrackManager {
   }
 
   async waitMetricsRefresh(projectId) {
-    const lastBomImport = new Date((await this.getProjectInfo()).lastBomImport);
+    const lastBomImport = new Date((await this.getProjectInfo(projectId)).lastBomImport);
     let lastOccurrence = undefined;
       
     do {
