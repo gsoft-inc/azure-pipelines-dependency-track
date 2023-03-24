@@ -89,7 +89,7 @@ const run = async () => {
     try {
       thresholdExpert.validateThresholds(metrics)
     } catch (err) {
-      if (thresholdAction === 'error') {
+      if (params.thresholdAction === 'error') {
         throw (err)
       }
 
