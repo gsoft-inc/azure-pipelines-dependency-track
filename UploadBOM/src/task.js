@@ -43,12 +43,12 @@ const run = async () => {
   
   console.log(localize('BOMUploadStarting', params.dtrackURI));
 
-  if (params.isProjectAutoCreated) {
-    console.log("isProjectAutoCreated == true");
+  if (params.isProjectAutoCreated === true) {
+    console.log("isProjectAutoCreated == true " + params.isProjectAutoCreated);
     token = await dtrackManager.uploadBomAndCreateProjectAsync(params.projectName, params.projectVersion, bom);
   }
   else {
-    console.log("isProjectAutoCreated == false");
+    console.log("isProjectAutoCreated == false " + params.isProjectAutoCreated);
     if (!projectId) {
       console.log("No project Id");
       projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
