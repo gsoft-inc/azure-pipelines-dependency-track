@@ -1,14 +1,17 @@
 # Dependency Track for Azure DevOps Pipelines
 Azure DevOps extension for submitting BOM reports to Dependency-Track
 
-> Note: BOM files with Byte-Order-Marks are not supported by this extension. This is an issue with Depenedency Track prior to version 3.8.0. [See this issue for the Dependency Track fix](https://github.com/DependencyTrack/dependency-track/issues/2312) and [this issue for this extension.](https://github.com/gsoft-inc/azure-pipelines-dependency-track/issues/28)
+> Note: BOM files with Byte-Order-Marks are not supported by this extension. This is an issue with Depenedency Track prior to version 4.7.1. [See this issue for the Dependency Track fix](https://github.com/DependencyTrack/dependency-track/issues/2312) and [this issue for this extension.](https://github.com/gsoft-inc/azure-pipelines-dependency-track/issues/28)
 
 ## Parameters
 ### Base Settings
 | Name    | Id |      Description      |  Required |
 |---------|---|:-------------|------|
 | BOM File Path | bomFilePath |  The path where the BOM file is located. (e.g. 'directory/**/bom.xml'). | True |
-| Project Id | dtrackProjId |    The guid of the project in Dependency Track   | True |
+| Project Id | dtrackProjId | The guid of the project in Dependency Track. Required if project name and version are not specified. | False |
+| Project Name | dtrackProjName | The name of the project in Dependency Track. Required if project id is not specified. | False |
+| Project Version | dtrackProjVersion | The version of the project in Dependency Track. Required if project id is not specified. | False |
+| Auto Create Project | dtrackProjAutoCreate | When set to TRUE and the project in Dependency Track does not exist, it will be created. Requires project name and version to be specified. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission. Default: False | False |
 | API Key | dtrackAPIKey | The Dependency Track API key | True |
 | Dependency Track URI | dtrackURI | The URL to the Dependency Track platform | True |
 
@@ -66,6 +69,41 @@ steps:
     dtrackURI: 'https://dtrack.example.com/'
 ```
 
+## Auto Create Project Usage Example
+```yaml
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm install -g @cyclonedx/cyclonedx-npm
+  displayName: 'npm install'
+
+- script: |
+    cyclonedx-npm --version
+    cyclonedx-npm --output-file '$(Agent.TempDirectory)/bom.xml'
+  displayName: 'Create BOM'
+
+- task: upload-bom-dtrack-task@1
+  displayName: 'Upload BOM to https://dtrack.example.com/'
+  inputs:
+    bomFilePath: '$(Agent.TempDirectory)/bom.xml'
+    dtrackProjName: 'Test Project'
+    dtrackProjVersion: 'v1.2'
+    dtrackProjAutoCreate: true
+    dtrackAPIKey: '$(dtrackAPIKey)'
+    dtrackURI: 'https://dtrack.example.com/'
+```
+
 ## Thresholds Usage Example
 This example finishes the pipeline with a warning if the number of low vulnerabilities surpasse zero.
 ![Low Threshold Surpassed Warning](https://raw.githubusercontent.com/gsoft-inc/azure-pipelines-dependency-track/master/images/pipelineThresholdWarning.png)
@@ -106,7 +144,7 @@ steps:
 Dependency Track for Azure DevOps Pipelines can be installed from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GSoft.dependency-track-vsts).
 
 ## License
-Copyright © 2022, GSoft inc. This code is licensed under the Apache License, Version 2.0. You may obtain a copy of this license at https://github.com/gsoft-inc/gsoft-license/blob/master/LICENSE.
+Copyright © 2023, GSoft inc. This code is licensed under the Apache License, Version 2.0. You may obtain a copy of this license at https://github.com/gsoft-inc/gsoft-license/blob/master/LICENSE.
 
 Dependency-Track is Copyright (c) Steve Springett. All Rights Reserved.
 https://github.com/DependencyTrack/dependency-track

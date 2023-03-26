@@ -4,7 +4,8 @@ import * as path from 'path'
 
 import DTrackClient from './dtrackClient.js'
 import DTrackManager from './dtrackManager.js'
-import {localize} from './localization.js'
+import { localize } from './localization.js'
+import TaskParametersUtility from "./taskParametersUtility.js"
 import ThresholdExpert from "./thresholdExpert.js"
 
 function loadFile(path, errorKey) {
@@ -20,79 +21,81 @@ function loadFile(path, errorKey) {
   }
 }
 
-async function validateThresholdsAsync(token, thresholdAction, thresholdExpert, dtrackManager) {
-  if ((thresholdAction === 'warn' || thresholdAction === 'error') && thresholdExpert.areThresholdsValidated()) {
-    
+const run = async () => {
+  tl.setResourcePath(path.join(__dirname, 'task.json'));
+
+  const params = TaskParametersUtility.GetParameters();
+  TaskParametersUtility.ValidateParameters(params);
+
+  let caFile;
+  if (tl.stats(params.caFilePath).isFile()) {
+    console.log(localize('ReadingCA', params.caFilePath));
+    caFile = loadFile(params.caFilePath, 'UnableToReadCA');
+  }
+
+  console.log(localize('ReadingBom', params.bomFilePath));
+  const bom = loadFile(params.bomFilePath, 'UnableToReadBom');
+  
+  const client = new DTrackClient(params.dtrackURI, params.dtrackAPIKey, caFile);
+  const dtrackManager = new DTrackManager(client);
+  
+  let projectId = params.projectId;
+  let token = undefined;
+  
+  if (params.isProjectAutoCreated) {
+    console.log(localize('BOMUploadAndCreateStarting', params.dtrackURI, params.projectName, params.projectVersion));
+    token = await dtrackManager.uploadBomAndCreateProjectAsync(params.projectName, params.projectVersion, bom);
+  }
+  else {
+    if (!projectId) {
+      console.log(localize('GetProjectUuidStarting', params.projectName, params.projectVersion));
+      projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
+    }
+
+    console.log(localize('BOMUploadWithIdStarting', projectId, params.dtrackURI));
+    token = await dtrackManager.uploadBomAsync(projectId, bom);
+  }
+
+  console.log(localize('BOMUploadSucceed', token));
+
+  const thresholdExpert = new ThresholdExpert(
+    Number.parseInt(params.thresholdCritical),
+    Number.parseInt(params.thresholdHigh),
+    Number.parseInt(params.thresholdMedium),
+    Number.parseInt(params.thresholdLow),
+    Number.parseInt(params.thresholdUnassigned),
+    Number.parseInt(params.thresholdpolicyViolationsFail),
+    Number.parseInt(params.thresholdpolicyViolationsWarn),
+    Number.parseInt(params.thresholdpolicyViolationsInfo),
+    Number.parseInt(params.thresholdpolicyViolationsTotal));
+
+  if ((params.thresholdAction === 'warn' || params.thresholdAction === 'error') && thresholdExpert.areThresholdsValidated()) {
+
     console.log(localize('ProcessingBOM'));
     await dtrackManager.waitBomProcessing(token);
 
+    if (!projectId) {
+      console.log(localize('GetProjectUuidStarting', params.projectName, params.projectVersion));
+      projectId = await dtrackManager.getProjetUUID(params.projectName, params.projectVersion);
+    }
+
     console.log(localize('RetrievingMetrics'));
-    await dtrackManager.waitMetricsRefresh();
-    const metrics = await dtrackManager.getProjectMetricsAsync();
+    await dtrackManager.waitMetricsRefresh(projectId);
+    const metrics = await dtrackManager.getProjectMetricsAsync(projectId);
 
     console.log(localize('VulnCount', metrics.critical, metrics.high, metrics.medium, metrics.low, metrics.unassigned, metrics.suppressed));
-    console.log(localize('PolicyViolationCount', metrics.policyViolationsFail,metrics.policyViolationsWarn,metrics.policyViolationsInfo,metrics.policyViolationsTotal));
+    console.log(localize('PolicyViolationCount', metrics.policyViolationsFail, metrics.policyViolationsWarn, metrics.policyViolationsInfo, metrics.policyViolationsTotal));
 
     try {
       thresholdExpert.validateThresholds(metrics)
     } catch (err) {
-      if (thresholdAction === 'error') {
-        throw(err)
+      if (params.thresholdAction === 'error') {
+        throw (err)
       }
 
       tl.setResult(tl.TaskResult.SucceededWithIssues, err)
     }
   }
-}
-
-const run = async () => {
-  tl.setResourcePath(path.join(__dirname, 'task.json'));
-
-  const bomFilePath = tl.getPathInput('bomFilePath', true, true);
-  const dtrackProjId = tl.getInput('dtrackProjId', true);
-  const dtrackAPIKey = tl.getInput('dtrackAPIKey', true);
-  const dtrackURI = tl.getInput('dtrackURI', true);
-  const caFilePath = tl.getPathInput('caFilePath', false, true);
-
-  const thresholdAction = tl.getInput('thresholdAction', false) || 'none';
-  const thresholdCritical = tl.getInput('thresholdCritical', false) || -1;
-  const thresholdHigh = tl.getInput('thresholdHigh', false) || -1;
-  const thresholdMedium = tl.getInput('thresholdMedium', false) || -1;
-  const thresholdLow = tl.getInput('thresholdLow', false) || -1;
-  const thresholdUnassigned = tl.getInput('thresholdUnassigned', false) || -1;
-
-  const thresholdpolicyViolationsFail = tl.getInput('thresholdpolicyViolationsFail', false) || -1;
-  const thresholdpolicyViolationsWarn = tl.getInput('thresholdpolicyViolationsWarn', false) || -1;
-  const thresholdpolicyViolationsInfo = tl.getInput('thresholdpolicyViolationsInfo', false) || -1;
-  const thresholdpolicyViolationsTotal = tl.getInput('thresholdpolicyViolationsTotal', false) || -1;
-
-  let caFile;
-  if (tl.stats(caFilePath).isFile() ) {
-    console.log(localize('ReadingCA', caFilePath));
-    caFile = loadFile(caFilePath, 'UnableToReadCA');
-  }
-
-  const client = new DTrackClient(dtrackURI, dtrackAPIKey, caFile);
-  const dtrackManager = new DTrackManager(client, dtrackProjId);
-
-  console.log(localize('ReadingBom', bomFilePath));
-  const bom = loadFile(bomFilePath, 'UnableToReadBom');
-
-  console.log(localize('BOMUploadStarting', dtrackURI));
-  const token = await dtrackManager.uploadBomAsync(bom);
-  console.log(localize('BOMUploadSucceed', token));
-
-  const thresholdExpert = new ThresholdExpert(
-    Number.parseInt(thresholdCritical), 
-    Number.parseInt(thresholdHigh), 
-    Number.parseInt(thresholdMedium), 
-    Number.parseInt(thresholdLow), 
-    Number.parseInt(thresholdUnassigned),
-    Number.parseInt(thresholdpolicyViolationsFail),
-    Number.parseInt(thresholdpolicyViolationsWarn),
-    Number.parseInt(thresholdpolicyViolationsInfo),
-    Number.parseInt(thresholdpolicyViolationsTotal));
-  await validateThresholdsAsync(token, thresholdAction, thresholdExpert, dtrackManager);
 };
 
 run().then(

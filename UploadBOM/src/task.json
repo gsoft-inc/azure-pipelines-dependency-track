@@ -34,20 +34,44 @@
   ],
   "inputs": [
     {
+      "name": "dtrackProjId",
+      "label": "Project Id",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The guid of the project in Dependency Track. Required if project name and version are not specified."
+    },
+    {
+      "name": "dtrackProjName",
+      "label": "Project Name",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The name of the project in Dependency Track. Required if project id is not specified."
+    },
+    {
+      "name": "dtrackProjVersion",
+      "label": "Project Version",
+      "type": "string",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The version of the project in Dependency Track. Required if project id is not specified."
+    },
+    {
+      "name": "dtrackProjAutoCreate",
+      "label": "Auto Create Project",
+      "type": "boolean",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "When set to TRUE and the project in Dependency Track does not exist, it will be created. Requires project name and version to be specified. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission."
+    },
+    {
       "name": "bomFilePath",
       "label": "BOM File Path",
       "type": "filePath",
       "required": true,
       "groupName": "baseSettings",
       "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
-    },
-    {
-      "name": "dtrackProjId",
-      "label": "Project Id",
-      "type": "string",
-      "required": true,
-      "groupName": "baseSettings",
-      "helpMarkDown": "The guid of the project in Dependency Track"
     },
     {
       "name": "dtrackAPIKey",
@@ -175,7 +199,8 @@
     "ReadingBom": "Reading BOM from location: %s",
     "UnableToReadCA": "Unable to read certificate file: %s",
     "ReadingCA": "Reading certificate from location: %s",
-    "BOMUploadStarting": "Starting BOM upload to Dependency Track at url: %s",
+    "BOMUploadAndCreateStarting": "Starting BOM upload to Dependency Track at url: %s\nProject with name '%s' and version '%s' will be created if it does not exist.",
+    "BOMUploadWithIdStarting": "Starting BOM upload to Dependency Track for project with id '%s' at url: %s",
     "BOMUploadFailed": "Uploading the BOM to Dependency Track Failed: %s",
     "BOMUploadSucceed": "Uploading the BOM succeeded! Token: %s",
     "TaskSucceed": "Finished task execution successfully!",
@@ -194,7 +219,11 @@
     "Low": "Low",
     "Unassigned": "Unassigned",
     "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s",
-    "PollingFailed": "Polling Dependency Track for update Failed: %s"   
+    "PollingFailed": "Polling Dependency Track for update Failed: %s"  ,
+    "ProjectNotFound" : "Unable to find Dependency Track project with name '%s' and version '%s'",
+    "GetProjectUuidStarting": "Getting project id using name '%s' and version '%s'.",
+    "MissingProjectInfoWhenAutoCreate": "Project name and version is required when auto creating project.",
+    "MissingProjectInfoWhenNoProjectId": "Project name and version is required when Project Id is not set."
   },
   "execution": {
     "Node10": {

@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/gsoft-inc/azure-pipelines-dependency-track#readme",
   "devDependencies": {
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.8"
   }
 }
