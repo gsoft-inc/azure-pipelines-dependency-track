@@ -74,20 +74,28 @@
       "helpMarkDown": "The path where the BOM file is located. (e.g. 'directory/**/bom.xml')."
     },
     {
+      "name": "serviceConnection",
+      "label": "Service Connection", 
+      "type": "connectedService:Generic",
+      "required": false,
+      "groupName": "baseSettings",
+      "helpMarkDown": "The Dependency Track service connection. This is used to set the Dependency Track URI and API Key. If this is set, the Dependency Track URI and API Key inputs will be ignored."
+    },
+    {
       "name": "dtrackAPIKey",
       "label": "API Key",
       "type": "string",
-      "required": true,
+      "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "The Dependency Track API key"
+      "helpMarkDown": "The Dependency Track API key. This is used to authenticate to Dependency Track. Required if Service Connection is not specified."
     },
     {
       "name": "dtrackURI",
       "label": "Dependency Track URI",
       "type": "string",
-      "required": true,
+      "required": false,
       "groupName": "baseSettings",
-      "helpMarkDown": "The URL to the Dependency Track platform"
+      "helpMarkDown": "The URL to the Dependency Track platform. Required if Service Connection is not specified."
     },
     {
       "name": "thresholdAction",
@@ -148,7 +156,7 @@
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of unassigned vulnerabilities to tolerate.\nA value of -1 disables this threshold."
     },
-     {
+    {
       "name": "thresholdpolicyViolationsFail",
       "label": "Fail Policy Violation Count",
       "type": "string",
@@ -157,7 +165,7 @@
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of failed policy violations to tolerate.\nA value of -1 disables this threshold."
     },
-     {
+    {
       "name": "thresholdpolicyViolationsWarn",
       "label": "Warn Policy Violation Count",
       "type": "string",
@@ -166,7 +174,7 @@
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of warn policy violations to tolerate.\nA value of -1 disables this threshold."
     },
-     {
+    {
       "name": "thresholdpolicyViolationsInfo",
       "label": "Info Policy Violation Count",
       "type": "string",
@@ -175,7 +183,7 @@
       "groupName": "thresholds",
       "helpMarkDown": "Maximum number of info policy violations to tolerate.\nA value of -1 disables this threshold."
     },
-     {
+    {
       "name": "thresholdpolicyViolationsTotal",
       "label": "Total Policy Violation Count",
       "type": "string",
@@ -219,8 +227,8 @@
     "Low": "Low",
     "Unassigned": "Unassigned",
     "PolicyViolationCount": "Current Policy Violation Count:\nFail: %s\nWarn:%s\nInfo: %s\nTotal: %s",
-    "PollingFailed": "Polling Dependency Track for update Failed: %s"  ,
-    "ProjectNotFound" : "Unable to find Dependency Track project with name '%s' and version '%s'",
+    "PollingFailed": "Polling Dependency Track for update Failed: %s",
+    "ProjectNotFound": "Unable to find Dependency Track project with name '%s' and version '%s'",
     "GetProjectUuidStarting": "Getting project id using name '%s' and version '%s'.",
     "MissingProjectInfoWhenAutoCreate": "Project name and version is required when auto creating project.",
     "MissingProjectInfoWhenNoProjectId": "Project name and version is required when Project Id is not set."
