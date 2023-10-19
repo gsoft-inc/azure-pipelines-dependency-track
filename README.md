@@ -12,8 +12,9 @@ Azure DevOps extension for submitting BOM reports to Dependency-Track
 | Project Name | dtrackProjName | The name of the project in Dependency Track. Required if project id is not specified. | False |
 | Project Version | dtrackProjVersion | The version of the project in Dependency Track. Required if project id is not specified. | False |
 | Auto Create Project | dtrackProjAutoCreate | When set to TRUE and the project in Dependency Track does not exist, it will be created. Requires project name and version to be specified. The API Key will need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission. Default: False | False |
-| API Key | dtrackAPIKey | The Dependency Track API key | True |
-| Dependency Track URI | dtrackURI | The URL to the Dependency Track platform | True |
+| API Key | dtrackAPIKey | The Dependency Track API key. Ignored if Service Connection is specified. | False |
+| Dependency Track URI | dtrackURI | The URL to the Dependency Track platform. Ignored if Service Connection is specified. | False |
+| Service Connection | serviceConnection | Generic service connection that contains the Dependency Track URI and API Key. | False |
 
 ### Threshold Options
 Setting these options will force the task to wait for the BOM analysis to be finished and the metrics to be recalculated before finishing the task.

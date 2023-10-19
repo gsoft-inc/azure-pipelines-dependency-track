@@ -1,25 +1,38 @@
 import * as tl from "azure-pipelines-task-lib/task"
-import {localize} from './localization.js'
+import { localize } from './localization.js'
 
 class TaskParametersUtility {
     static GetParameters() {
+        let dtrackAPIKey;
+        let dtrackURI;
+
+        let serviceConnectionId = tl.getInput('serviceConnection', false);
+        if (serviceConnectionId) {
+            dtrackURI = tl.getEndpointUrl(serviceConnectionId, false);
+            dtrackAPIKey = tl.getEndpointAuthorizationParameter(serviceConnectionId, 'password', false);
+        }
+        else {
+            dtrackURI = tl.getInput('dtrackURI', true);
+            dtrackAPIKey = tl.getInput('dtrackAPIKey', true);
+        }
+
         let params = {
             projectId: tl.getInput('dtrackProjId', false),
             projectName: tl.getInput('dtrackProjName', false),
             projectVersion: tl.getInput('dtrackProjVersion', false),
             isProjectAutoCreated: tl.getBoolInput('dtrackProjAutoCreate', false),
             bomFilePath: tl.getPathInput('bomFilePath', true, true),
-            dtrackAPIKey: tl.getInput('dtrackAPIKey', true),
-            dtrackURI: tl.getInput('dtrackURI', true),
+            dtrackAPIKey: dtrackAPIKey,
+            dtrackURI: dtrackURI,
             caFilePath: tl.getPathInput('caFilePath', false, true),
-          
+
             thresholdAction: tl.getInput('thresholdAction', false) || 'none',
             thresholdCritical: tl.getInput('thresholdCritical', false) || -1,
             thresholdHigh: tl.getInput('thresholdHigh', false) || -1,
             thresholdMedium: tl.getInput('thresholdMedium', false) || -1,
             thresholdLow: tl.getInput('thresholdLow', false) || -1,
             thresholdUnassigned: tl.getInput('thresholdUnassigned', false) || -1,
-          
+
             thresholdpolicyViolationsFail: tl.getInput('thresholdpolicyViolationsFail', false) || -1,
             thresholdpolicyViolationsWarn: tl.getInput('thresholdpolicyViolationsWarn', false) || -1,
             thresholdpolicyViolationsInfo: tl.getInput('thresholdpolicyViolationsInfo', false) || -1,
